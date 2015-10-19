@@ -1,4 +1,4 @@
-'''This class is responsible for the videos on the site'''
+'''This class is responsible for the videos on the site.'''
 
 class Video:
 

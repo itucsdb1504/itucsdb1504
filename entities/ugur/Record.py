@@ -1,4 +1,4 @@
-'''records of players that will be presented to the user...'''
+'''records of players that will be presented to the user'''
 
 class Record:
 
