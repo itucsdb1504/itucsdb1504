@@ -11,6 +11,10 @@ app = Flask(__name__)
 def home():
     now = datetime.datetime.now()
     return render_template('home.html', current_time=now.ctime())
+@app.route('/players')
+def players():
+	return render_template('players.html')
+
 
 
 if __name__ == '__main__':
