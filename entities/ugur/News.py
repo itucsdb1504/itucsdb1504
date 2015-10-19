@@ -1,4 +1,4 @@
-'''This class is responsible for the news to be shown on the site'''
+'''This class is responsible for the news to be shown on the site.'''
 
 class News:
 
