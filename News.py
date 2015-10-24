@@ -1,4 +1,6 @@
-'''This class is responsible for the news to be shown on the site.'''
+# Uğur Büyükyılmaz | 040090560
+
+# This class is responsible for the news to be shown on the site
 
 class News:
 
