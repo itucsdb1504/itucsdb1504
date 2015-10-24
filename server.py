@@ -32,7 +32,9 @@ def addRecord():
 @app.route('/admin_panel/video')
 def addVideo():
     return render_template('video.html')
-
+@app.route('/admin_panel/match')
+def addMatch():
+    return render_template('match.html')
 
 if __name__ == '__main__':
     PORT = int(os.getenv('VCAP_APP_PORT', '5000'))

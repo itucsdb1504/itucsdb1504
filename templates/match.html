@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8" />
 
-
 <title>Home</title>
 <link rel="stylesheet"
 	href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
@@ -31,11 +30,40 @@
             </ul>
 		</div>
 
-		<div class="col-md-9" style="float:right">
+		<div class="col-md-9" style="float: right">
 
-		    <div class="form-area col-md-8 col-centered">
-		        WELCOME ADMIN
-		    </div>
+			<div class="form-area col-md-8 col-centered">
+				<form role="form">
+					<br style="clear: both">
+					<h3 style="margin-bottom: 25px; text-align: center;">Match</h3>
+					<div class="form-group">
+						<input type="text" class="form-control" id="add_tournamentID"
+							placeholder="Tournament ID" required>
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" type="textarea" id="add_venueID"
+							placeholder="Venue ID" rows="7"></textarea>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="add_player1"
+							placeholder="Player 1" required>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="add_player2"
+							placeholder="Player 2" required>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="add_isLive"
+							placeholder="Is Live" required>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="add_score"
+							placeholder="Score" required>
+					</div>
+					<button type="button" id="submit" name="submit"
+						class="btn btn-primary pull-right">Submit Form</button>
+				</form>
+			</div>
 		</div>
 	</div>
 
