@@ -3,7 +3,16 @@ body {
   color: #6F6F6F;
   font-family: 'Droid Sans', 'Helvetica', 'sans';
   font-size: 12pt;
-  margin: 2ex 2em;
+  height: 100%;
+}
+
+.container {
+	margin : 0;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
 }
 
 h1, h2, h3, h4 {

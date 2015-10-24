@@ -17,8 +17,12 @@ def players():
     player1 = {'name':'kerim'}
     player2 = {'name':'ahmet'}
     return render_template('players.html', player1=player1, player2=player2)
-
-
+@app.route('/admin_panel')
+def test():
+    return render_template('admin_panel.html')
+@app.route('/admin_panel/add_news')
+def addNews():
+    return render_template('add_news.html')
 
 if __name__ == '__main__':
     PORT = int(os.getenv('VCAP_APP_PORT', '5000'))
