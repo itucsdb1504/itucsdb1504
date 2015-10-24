@@ -1,3 +1,4 @@
+# This class is responsible for sponsoring brands.
 class Sponsor:
 
     def __init__(self, id, name, image_url, ext_url):

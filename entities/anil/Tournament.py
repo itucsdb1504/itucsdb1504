@@ -1,3 +1,4 @@
+# This class is responsible for Tournaments information.
 class Tournament:
 
     def __init__(self, id, name, venue, round, player_count, last_winner, award):

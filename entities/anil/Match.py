@@ -1,3 +1,4 @@
+# This class is responsible for Matches between players.
 class Match:
 
     def __init__(self, id, tournament, player1, player2, isLive, score):
