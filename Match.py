@@ -1,11 +1,12 @@
-# Anýl Yýldýrým - 150130141
+# AnÄ±l YÄ±ldÄ±rÄ±m - 150130141
 
 # This class is responsible for Matches between players.
 class Match:
 
-    def __init__(self, id, tournament, player1, player2, isLive, score):
+    def __init__(self, id, tournamentID, venueID, player1, player2, isLive, score):
         self.ID = id
-        self.Tournament = tournament
+        self.TournamentID = tournamentID
+        self.VenueID = venueID
         self.Player1 = player1
         self.Player2 = player2
         self.IsLive = isLive
@@ -14,8 +15,11 @@ class Match:
     def getID(self):
         return self.ID
 
-    def getTournament(self):
-        return self.Tournament
+    def getTournamentID(self):
+        return self.TournamentID
+
+    def getVenueID(self):
+        return self.VenueID
 
     def getPlayer1(self):
         return self.Player1

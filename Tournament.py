@@ -1,16 +1,16 @@
-# Anýl Yýldýrým - 150130141
+# AnÄ±l YÄ±ldÄ±rÄ±m - 150130141
 
 # This class is responsible for Tournaments information.
 class Tournament:
 
-    def __init__(self, id, name, venue, round, player_count, last_winner, award):
+    def __init__(self, id, name, venueID, round, player_count, last_winnerID, awardID):
         self.ID = id
         self.Name = name
-        self.Venue = venue
+        self.VenueID = venueID
         self.Round = round
         self.PlayerCount = player_count
-        self.LastWinner = last_winner
-        self.Award = award
+        self.LastWinnerID = last_winnerID
+        self.AwardID = awardID
 
     def getID(self):
         return self.ID
@@ -18,8 +18,8 @@ class Tournament:
     def getName(self):
         return self.Name
 
-    def getVenue(self):
-        return self.Venue
+    def getVenueID(self):
+        return self.VenueID
 
     def getRound(self):
         return self.Round
@@ -27,8 +27,8 @@ class Tournament:
     def getPlayerCount(self):
         return self.PlayerCount
 
-    def getLastWinner(self):
-        return self.LastWinner
+    def getLastWinnerID(self):
+        return self.LastWinnerID
 
-    def getAward(self):
-        return self.Award
+    def getAwardID(self):
+        return self.AwardID
