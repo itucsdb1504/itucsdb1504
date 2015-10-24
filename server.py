@@ -23,6 +23,9 @@ def test():
 @app.route('/admin_panel/add_news')
 def addNews():
     return render_template('add_news.html')
+@app.route('/admin_panel/test')
+def testHtml():
+    return render_template('test.html')
 
 if __name__ == '__main__':
     PORT = int(os.getenv('VCAP_APP_PORT', '5000'))
