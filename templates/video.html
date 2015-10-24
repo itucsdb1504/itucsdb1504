@@ -24,7 +24,6 @@
                 <li><a href="/admin_panel/add_news" class="list-group-item">Add News</a></li>
                 <li><a href="/admin_panel/record" class="list-group-item">Add Record</a></li>
                 <li><a href="/admin_panel/video" class="list-group-item">Add Video</a></li>
-                <li><a href="#" class="list-group-item">Porta ac consectetur ac</a></li>
                 <li><a href="#" class="list-group-item">Vestibulum at eros</a></li>
             </ul>
 		</div>
@@ -34,20 +33,16 @@
 		    <div class="form-area col-md-8 col-centered">
 		        <form role="form">
 		        <br style="clear:both">
-                   <h3 style="margin-bottom: 25px; text-align: center;">Add News</h3>
+	                   <h3 style="margin-bottom: 25px; text-align: center;">Add Video</h3>
+                   	<div class="form-group">
+						<input type="text" class="form-control" id="add_video_title" placeholder="Title" required>
+					</div>
 	   				<div class="form-group">
-						<input type="text" class="form-control" id="add_news_title" placeholder="Title" required>
+						<input type="text" class="form-control" id="add_ext_url" placeholder="External URL" required>
 					</div>
 					<div class="form-group">
-						<textarea class="form-control" type="textarea" id="message" placeholder="Message" rows="7"></textarea>
+						<input type="text" class="form-control" id="add_source_type" placeholder="Source Type Exp: Youtube" required>
 					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="add_news_imageurl" placeholder="Image URL" required>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="add_news_date" placeholder="Date 24/15/2009" required>
-					</div>
-
 		        <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
 		        </form>
 		    </div>

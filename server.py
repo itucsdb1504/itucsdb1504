@@ -18,7 +18,7 @@ def players():
     player2 = {'name':'ahmet'}
     return render_template('players.html', player1=player1, player2=player2)
 @app.route('/admin_panel')
-def test():
+def adminPage():
     return render_template('admin_panel.html')
 @app.route('/admin_panel/add_news')
 def addNews():
@@ -26,6 +26,13 @@ def addNews():
 @app.route('/admin_panel/test')
 def testHtml():
     return render_template('test.html')
+@app.route('/admin_panel/record')
+def addRecord():
+    return render_template('record.html')
+@app.route('/admin_panel/video')
+def addVideo():
+    return render_template('video.html')
+
 
 if __name__ == '__main__':
     PORT = int(os.getenv('VCAP_APP_PORT', '5000'))
