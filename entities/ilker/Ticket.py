@@ -1,4 +1,10 @@
 # Ticket class is using in external tickets definition for matches
+
+'''root_dir = os.path.abspath(os.path.dirname(__file__))
+utils_path = os.path.abspath(root_dir).split(os.sep)[-3]
+
+from utils_path import GeneralUtils'''
+
 class Ticket:
 
     def __init__(self, id, title, content, price, ext_url):
@@ -9,7 +15,9 @@ class Ticket:
         self.ExtUrl = ext_url
 
     def getID(self):
-        return self.ID
+        utils = GeneralUtils()
+
+        return utils.generateID()
 
     def getTitle(self):
         return self.Title
