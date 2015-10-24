@@ -4,21 +4,24 @@
 
 class Record:
 
-    def __init__(self, id, name, player_name, year):
+    def __init__(self, id, description, player_id, video_id, date):
         self.ID = id
-        self.Name = name
-        self.PlayerName = player_name
-        self.Year = year
+        self.Description = description
+        self.PlayerID = player_id
+        self.VideoID = video_id
+        self.Date = date
 
     def getID(self):
         return self.ID
 
-
     def getName(self):
-        return self.Name
+        return self.Description
 
-    def getPlayerName(self):
-        return self.PlayerName
+    def getPlayerID(self):
+        return self.PlayerID
+
+    def getVideoID(self):
+        return self.VideoID
 
     def getYear(self):
-        return self.Year
+        return self.Date

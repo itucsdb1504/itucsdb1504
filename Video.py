@@ -4,11 +4,11 @@
 
 class Video:
 
-    def __init__(self, id, title, ext_url, size):
+    def __init__(self, id, title, ext_url, source_type):
         self.ID = id
         self.Title = title
         self.ExtUrl = ext_url
-        self.Size = size
+        self.SourceType = source_type
 
     def getID(self):
         return self.ID
@@ -19,5 +19,5 @@ class Video:
     def getExtUrl(self):
         return self.ExtUrl
 
-    def getSize(self):
-        return self.Size
+    def getSourceType(self):
+        return self.SourceType
