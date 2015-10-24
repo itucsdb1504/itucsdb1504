@@ -1,3 +1,5 @@
+#isin kirbas 040090600
+
 class Comment:
 
     def __init__(self, id, username, title, content, date):

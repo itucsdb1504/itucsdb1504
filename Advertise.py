@@ -1,3 +1,5 @@
+#isin kirbas 040090600
+
 class Advertise:
 
     def __init__(self, id, image_url, ext_url, size):

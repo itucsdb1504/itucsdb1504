@@ -1,3 +1,5 @@
+#isin kirbas 040090600
+
 class User:
 
     def __init__(self, id, firstname, lastname, age, gender, email,account_type):
