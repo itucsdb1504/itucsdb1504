@@ -1,3 +1,5 @@
+# Anýl Yýldýrým - 150130141
+
 # This class is responsible for sponsoring brands.
 class Sponsor:
 
