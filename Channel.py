@@ -1,3 +1,5 @@
+# Ýlker Yaðmur - 040090574
+
 # Channel class is using in match live broadcast linking or showing in app
 class Channel:
 
