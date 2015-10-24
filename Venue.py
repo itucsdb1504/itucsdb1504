@@ -4,9 +4,10 @@
 # Venue class using in some place definition for tournaments
 class Venue:
 
-    def __init__(self, id, name,location, description):
+    def __init__(self, id, name, capacity, location, description):
         self.ID = id
         self.Name = name
+        self.Capacity = capacity
         self.Location = location
         self.Description = description
 
@@ -16,6 +17,9 @@ class Venue:
 
     def getName(self):
         return self.Name
+
+    def getCapacity(self):
+        return self.Capacity
 
     # Location of Venue it also contains Latitude, Longitude
     def getLocation(self):
