@@ -1,4 +1,6 @@
-'''records of players that will be presented to the user...'''
+# Uğur Büyükyılmaz | 040090560
+
+# Records of players that will be presented to the user
 
 class Record:
 

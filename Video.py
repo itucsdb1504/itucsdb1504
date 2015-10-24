@@ -1,4 +1,6 @@
-'''This class is responsible for the videos on the site'''
+# Uğur Büyükyılmaz | 040090560
+
+# This class is responsible for the videos on the site
 
 class Video:
 
