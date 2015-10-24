@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8" />
 
+
 <title>Home</title>
 <link rel="stylesheet"
 	href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
@@ -21,7 +22,7 @@
 
 		<div class="col-md-3" style="float:left;background-color:#ccc; height:500px;">
 			<ul class="list-group">
-                <li><a href="/admin_panel/add_news" class="list-group-item">Add News</a></li>
+				<li><a href="/admin_panel/add_news" class="list-group-item">Add News</a></li>
                 <li><a href="/admin_panel/record" class="list-group-item">Add Record</a></li>
                 <li><a href="/admin_panel/video" class="list-group-item">Add Video</a></li>
                 <li><a href="/admin_panel/test" class="list-group-item">Test</a></li>
@@ -38,18 +39,18 @@
 		    <div class="form-area col-md-8 col-centered">
 		        <form role="form">
 		        <br style="clear:both">
-	                   <h3 style="margin-bottom: 25px; text-align: center;">Add Record</h3>
-                   	<div class="form-group">
-						<textarea class="form-control" type="textarea" id="record_desc" placeholder="Record Description" rows="7"></textarea>
-					</div>
-	   				<div class="form-group">
-						<input type="text" class="form-control" id="player_id" placeholder="Player ID" required>
+	                   <h3 style="margin-bottom: 25px; text-align: center;">Advertise</h3>
+					<div class="form-group">
+						<input type="text" class="form-control" id="advertise_imageurl" placeholder="Image URL" required>
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" id="video_id" placeholder="Video ID" required>
+						<input type="text" class="form-control" id="advertise_exturl" placeholder="Ext URL" required>
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" id="add_news_date" placeholder="Date (example: 24/10/2015)" required>
+						<input type="text" class="form-control" id="advertise_id" placeholder="ID" required>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="advertise_size" placeholder="Size" required>
 					</div>
 
 		        <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>

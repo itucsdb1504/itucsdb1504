@@ -35,6 +35,15 @@ def addVideo():
 @app.route('/admin_panel/match')
 def addMatch():
     return render_template('match.html')
+@app.route('/admin_panel/advertise')
+def advertise():
+    return render_template('advertise.html')
+@app.route('/admin_panel/comment')
+def comment():
+    return render_template('comment.html')
+@app.route('/admin_panel/user')
+def user():
+    return render_template('user.html')
 
 if __name__ == '__main__':
     PORT = int(os.getenv('VCAP_APP_PORT', '5000'))
