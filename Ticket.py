@@ -9,17 +9,22 @@ from utils_path import GeneralUtils'''
 
 class Ticket:
 
-    def __init__(self, id, title, content, price, ext_url):
+    def __init__(self, id, venue_id, title, content, price, date, ext_url):
         self.ID = id
+        self.VenueID = venue_id
         self.Title = title
         self.Content = content
         self.Price = price
+        self.Date = date
         self.ExtUrl = ext_url
 
     def getID(self):
         utils = GeneralUtils()
 
         return utils.generateID()
+
+    def getVenueID(self):
+        return self.VenueID
 
     def getTitle(self):
         return self.Title
@@ -29,6 +34,9 @@ class Ticket:
 
     def getPrice(self):
         return self.Price
+
+    def getDate(self):
+        return self.Date
 
     # External Url to sales page of ticket
     def getExtUrl(self):
