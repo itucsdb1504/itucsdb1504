@@ -20,9 +20,9 @@ def players():
 @app.route('/admin_panel')
 def adminPage():
     return render_template('admin_panel.html')
-@app.route('/admin_panel/add_news')
+@app.route('/admin_panel/news')
 def addNews():
-    return render_template('add_news.html')
+    return render_template('news.html')
 @app.route('/admin_panel/test')
 def testHtml():
     return render_template('test.html')
