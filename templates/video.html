@@ -10,18 +10,37 @@
 	href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
-	<ul>
-		<li><a href="/">Home</a></li>
-		<li><a href="/players">Players</a></li>
-		<li><a href="#">Tab 2</a></li>
-		<li><a href="#">Tab 3</a></li>
-	</ul>
+	<div class="top-navigation">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#"></a>
+				</div>
 
-	<div class="container col-md-12" style="height: 100%">
+				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+					<ul class="nav navbar-nav">
+						<li><a href="#">Home</a></li>
+						<li><a href="/players">Players</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/admin_panel">Admin Panel</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
 
-		<div class="col-md-3" style="float:left;background-color:#ccc; height:500px;">
+	<div class="container col-md-12">
+
+		<div class="col-md-3 admin-left-nav">
 			<ul class="list-group">
-                  <li><a href="/admin_panel/news" class="list-group-item">Add News</a></li>
+                <li><a href="/admin_panel/news" class="list-group-item">Add News</a></li>
                 <li><a href="/admin_panel/record" class="list-group-item">Add Record</a></li>
                 <li><a href="/admin_panel/video" class="list-group-item">Add Video</a></li>
                 <li><a href="/admin_panel/test" class="list-group-item">Test</a></li>
@@ -29,7 +48,7 @@
                 <li><a href="/admin_panel/advertise" class="list-group-item">Advertise</a></li>
                 <li><a href="/admin_panel/comment" class="list-group-item">Comment</a></li>
                 <li><a href="/admin_panel/user" class="list-group-item">User</a></li>
-                <li><a href="#" class="list-group-item">NULL</a></li>
+                <li><a href="/admin_panel/venue" class="list-group-item">Venue</a></li>
                 <li><a href="#" class="list-group-item">NULL</a></li>
                 <li><a href="#" class="list-group-item">NULL</a></li>
                 <li><a href="#" class="list-group-item">NULL</a></li>
@@ -39,7 +58,7 @@
             </ul>
 		</div>
 
-		<div class="col-md-9" style="float:right">
+		<div class="col-md-9 admin-right-content">
 
 		    <div class="form-area col-md-8 col-centered">
 		        <form role="form">
