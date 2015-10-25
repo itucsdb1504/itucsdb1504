@@ -19,6 +19,7 @@ def players():
     player2 = {'name':'ahmet'}
     return render_template('players.html', player1=player1, player2=player2)
 
+
 @app.route('/admin_panel')
 def adminPage():
     return render_template('admin_panel.html')
@@ -76,5 +77,9 @@ def channel():
     return render_template('channel.html')
 
 if __name__ == '__main__':
-    PORT = int(os.getenv('VCAP_APP_PORT', '5000'))
-    app.run(host='0.0.0.0', port=int(PORT))
+    VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
+    if VCAP_APP_PORT is not None:
+        port, debug = int(VCAP_APP_PORT), False
+    else:
+        port, debug = 5000, True
+    app.run(host='0.0.0.0', port=port, debug=debug)

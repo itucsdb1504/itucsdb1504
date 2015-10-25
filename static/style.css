@@ -8,11 +8,40 @@ body {
 
 .container {
 	margin : 0;
+	margin-top: 50px;
+	height: 100%;
 }
 
-.col-centered{
+.col-centered {
     float: none;
     margin: 0 auto;
+}
+
+.top-navigation nav li a {
+	text-decoration: none;
+}
+
+.top-navigation nav li a:hover {
+	background-color: #2b2b2b;
+}
+
+.admin-left-nav {
+	float:left;
+	background-color:#fff;
+}
+
+.admin-right-content{
+	float:right;
+}
+
+.admin-left-nav .list-group {
+	border: none;
+}
+
+.admin-left-nav .list-group a {
+	border: none;
+	border-bottom: 1px solid rgb(221, 221, 221);
+	text-decoration: none;
 }
 
 h1, h2, h3, h4 {
