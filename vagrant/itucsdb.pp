@@ -57,19 +57,13 @@ class itucsdb {
   package { "python3-pip":
     ensure => present,
   }
-  package { "python3-sphinx":
-    ensure => present,
-  }
-  package { "python3-flask":
-    ensure => present,
-  }
-  package { "python3-psycopg2":
-    ensure => present,
-  }
   package { "postgresql":
     ensure => present,
   }
   package { "libpq-dev":
+    ensure => present,
+  }
+  package { "phppgadmin":
     ensure => present,
   }
 
