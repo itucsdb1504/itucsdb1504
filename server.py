@@ -13,11 +13,9 @@ def home():
     now = datetime.datetime.now()
     return render_template('home.html', current_time=now.ctime())
 
-@app.route('/players')
+@app.route('/admin_panel/player')
 def players():
-    player1 = {'name':'kerim'}
-    player2 = {'name':'ahmet'}
-    return render_template('players.html', player1=player1, player2=player2)
+    return render_template('player.html')
 
 
 @app.route('/admin_panel')
