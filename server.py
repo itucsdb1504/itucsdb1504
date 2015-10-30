@@ -1,15 +1,20 @@
 import datetime
 import os
+import psycopg2
+
+import dbmanager
 
 from flask import Flask
 from flask import render_template
-from players import Player
 
 app = Flask(__name__)
 
-
 @app.route('/')
 def home():
+
+    '''if(dbmanager.isTableExists("public", "mytable")):
+       print("OK")'''
+
     now = datetime.datetime.now()
     return render_template('home.html', current_time=now.ctime())
 
