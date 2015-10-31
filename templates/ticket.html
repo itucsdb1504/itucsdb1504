@@ -1,0 +1,29 @@
+{% extends "admin_layout.html" %}
+{% block body %}
+	<div class="form-area col-md-8 col-centered">
+        <form role="form">
+        <br style="clear:both">
+                 <h3 style="margin-bottom: 25px; text-align: center;">Add Ticket</h3>
+  				<div class="form-group">
+				<input type="text" class="form-control" id="add_news_title" placeholder="Venue ID" required>
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="add_news_imageurl" placeholder="Title" required>
+			</div>
+			<div class="form-group">
+				<textarea class="form-control" type="textarea" id="message" placeholder="Content" rows="7"></textarea>
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="add_news_imageurl" placeholder="Price" required>
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="add_news_imageurl" placeholder="External URL" required>
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="add_news_date" placeholder="Date 24/15/2009" required>
+			</div>
+
+        <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
+        </form>
+    </div>
+{% endblock %}
