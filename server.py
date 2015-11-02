@@ -69,6 +69,12 @@ def user():
 
 @app.route('/admin_panel/venue')
 def venue():
+    if(dbmanager.isTableExists('public','venues') == False):
+        dbmanager.createVenueTable()
+        print("Venues Table Created!")
+    else:
+        print("Venues Table Already Exist!")
+
     return render_template('venue.html')
 
 @app.route('/admin_panel/ticket')
