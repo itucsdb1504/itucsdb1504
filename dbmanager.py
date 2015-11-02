@@ -28,11 +28,11 @@ def createVenueTable():
 
 def getVenues():
 
-    if(isTableExists('public','venues') == False):
+    '''if(isTableExists('public','venues') == False):
         createVenueTable()
         print("Venues Table Created!")
     else:
-        print("Venues Table Already Exist!")
+        print("Venues Table Already Exist!")'''
 
     conn = psycopg2.connect(conn_string)
 
@@ -78,3 +78,65 @@ def deleteVenue(id):
     cursor.execute("DELETE FROM venues WHERE id = '%s'"%(id))
 
     conn.commit()
+
+def createNewsTable():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("CREATE TABLE news ( ID VARCHAR(100) NOT NULL,Title VARCHAR(100),Content VARCHAR(250),ImageUrl VARCHAR,ExternalUrl VARCHAR,Date VARCHAR(20),PRIMARY KEY (ID))")
+
+    conn.commit()
+
+def getNews():
+
+    #if(isTableExists('public','news') == False):
+        #createNewsTable()
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM news ")
+
+    newsList = []
+
+    row = cursor.fetchone()
+    while row:
+
+       temp_news = News(row[0],row[1],row[2],row[3],row[4])
+
+       newsList.append(temp_news)
+
+       row = cursor.fetchone()
+
+    return newsList
+
+def addNews(title, content, image_url, date):
+
+    try:
+
+        conn = psycopg2.connect(conn_string)
+
+        cursor = conn.cursor()
+
+        cursor.execute("INSERT INTO news VALUES('%s','%s','%s','%s','%s')"%(utils.generateID(), title, content, image_url, date))
+
+        conn.commit()
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deleteNews(id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM news WHERE id = '%s'"%(id))
+
+    conn.commit()
+
+
