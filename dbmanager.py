@@ -1,5 +1,6 @@
 import psycopg2
-import Venue
+from Venue import Venue
+import utils
 
 conn_string = "host='localhost' port='5432' dbname='postgres' user='postgres' password='Abcd1234'"
 
@@ -27,8 +28,8 @@ def createVenueTable():
 
 def getVenues():
 
-    if(dbmanager.isTableExists('public','venues') == False):
-        dbmanager.createVenueTable()
+    if(isTableExists('public','venues') == False):
+        createVenueTable()
         print("Venues Table Created!")
     else:
         print("Venues Table Already Exist!")
@@ -37,8 +38,43 @@ def getVenues():
 
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM Venues ")
+    cursor.execute("SELECT * FROM venues ")
 
-    result = cursor.fetchall()
+    venueList = []
 
-    return result[0]
+    row = cursor.fetchone()
+    while row:
+
+       temp_venue = Venue(row[0],row[1],row[2],row[3],row[4])
+
+       venueList.append(temp_venue)
+
+       row = cursor.fetchone()
+
+    return venueList
+
+def addVenue(name, capacity, location, description):
+
+    try:
+
+        conn = psycopg2.connect(conn_string)
+
+        cursor = conn.cursor()
+
+        cursor.execute("INSERT INTO venues VALUES('%s','%s','%s','%s','%s')"%(utils.generateID(),name, capacity,location,description))
+
+        conn.commit()
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deleteVenue(id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM venues WHERE id = '%s'"%(id))
+
+    conn.commit()

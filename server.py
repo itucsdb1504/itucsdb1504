@@ -8,6 +8,9 @@ import dbmanager
 
 from flask import Flask
 from flask import render_template
+from flask import redirect
+from flask.helpers import url_for
+from flask import request
 
 app = Flask(__name__)
 
@@ -82,15 +85,17 @@ def comment():
 def user():
     return render_template('user.html')
 
-@app.route('/admin_panel/venue')
+@app.route('/admin_panel/venue', methods=['GET','POST'])
 def venue():
-    if(dbmanager.isTableExists('public','venues') == False):
-        dbmanager.createVenueTable()
-        print("Venues Table Created!")
-    else:
-        print("Venues Table Already Exist!")
 
-    return render_template('venue.html')
+    if(request.method == 'GET'):
+        _venueList = dbmanager.getVenues()
+        return render_template('venue.html', venueList = _venueList)
+
+    if(request.form["action"] == "add_venue_action"):
+        dbmanager.addVenue(request.form['add_name'], request.form['add_capacity'], request.form['add_location'], request.form['add_desc'])
+        return redirect(url_for('venue'))
+
 
 @app.route('/admin_panel/ticket')
 def ticket():

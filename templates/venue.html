@@ -1,23 +1,53 @@
-{% extends "admin_layout.html" %}
-{% block body %}
-  	<div class="form-area col-md-8 col-centered">
-        <form role="form">
-        <br style="clear:both">
-                 <h3 style="margin-bottom: 25px; text-align: center;">Add Venue</h3>
-  				<div class="form-group">
-				<input type="text" class="form-control" id="add_news_title" placeholder="Title" required>
+{% extends "admin_layout.html" %} {% block body %}
+
+	<div class="form-area col-md-8 col-centered">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Capacity</th>
+					<th>Location</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for venue in venueList: %}
+					<tr>
+						<td class="id" style="display: none;">{{venue.getID()}}</td>
+						<td>{{venue.getName()}}</td>
+						<td>{{venue.getCapacity()}}</td>
+						<td>{{venue.getLocation()}}</td>
+						<td>{{venue.getDescription()}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="form-area col-md-8 col-centered">
+		<form action="{{ url_for('venue') }}" method="post">
+			<br style="clear: both">
+			<h3 style="margin-bottom: 25px; text-align: center;">Add Venue</h3>
+			<div class="form-group">
+				<input type="text" class="form-control" name="add_name"
+					placeholder="Name" required>
 			</div>
 			<div class="form-group">
-				<textarea class="form-control" type="textarea" id="message" placeholder="Message" rows="7"></textarea>
+				<input type="text" class="form-control" name="add_capacity"
+					placeholder="Capacity" required>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="add_news_imageurl" placeholder="Image URL" required>
+				<input type="text" class="form-control" name="add_location"
+					placeholder="Location" required>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="add_news_date" placeholder="Date 24/15/2009" required>
+				<input type="text" class="form-control" name="add_desc"
+					placeholder="Description" required>
 			</div>
 
-        <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
-        </form>
-    </div>
+			<input type="submit" name="action" value="add_venue_action"
+				class="btn btn-primary pull-right" />
+		</form>
+	</div>
+
 {% endblock %}
