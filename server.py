@@ -72,9 +72,15 @@ def addVideo():
 def addMatch():
     return render_template('match.html')
 
-@app.route('/admin_panel/sponsor')
+@app.route('/admin_panel/sponsor', methods=['GET','POST'])
 def sponsor():
-    return render_template('sponsor.html')
+    if(request.method == 'GET'):
+        _sponsorList = dbmanager.getSponsor()
+        return render_template('sponsor.html', sponsorList = _sponsorList)
+
+    if(request.form["action"] == "add_sponsor_action"):
+        dbmanager.addSponsor(request.form['add_name'], request.form['add_imageURL'], request.form['add_extURL'])
+        return redirect(url_for('sponsor'))
 
 @app.route('/admin_panel/tournament')
 def tournament():
