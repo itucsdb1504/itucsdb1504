@@ -14,7 +14,7 @@ class Record:
     def getID(self):
         return self.ID
 
-    def getName(self):
+    def getDescription(self):
         return self.Description
 
     def getPlayerID(self):
