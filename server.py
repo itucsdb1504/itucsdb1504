@@ -58,7 +58,7 @@ def addNews():
         return render_template('news.html', newsList = _newsList)
 
     if(request.form["action"] == "add_news_action"):
-        dbmanager.addVenue(request.form['news_title'], request.form['message'], request.form['news_imageurl'], request.form['news_date'])
+        dbmanager.addNews(request.form['news_title'], request.form['message'], request.form['news_imageurl'], request.form['news_date'])
         return redirect(url_for('addNews'))
 
 
