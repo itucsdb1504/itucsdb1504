@@ -206,7 +206,148 @@ def deleteSponsor(id):
 
     conn.commit()
 
-""" END ANIL YILDIRIM """
+def createTournamentTable():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("CREATE TABLE tournaments (ID VARCHAR(100) NOT NULL,Name VARCHAR(100),VenueID VARCHAR(100) REFERENCES venues (ID),Round VARCHAR(20),PlayerCound int,LastWinnerID VARCHAR(100) REFERENCES players (ID),AwardID VARCHAR(100) REFERENCES awards (ID),PRIMARY KEY (ID))")
+
+    conn.commit()
+
+def getTournaments():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM tournaments ")
+
+    tournamentList = []
+
+    row = cursor.fetchone()
+    while row:
+
+       tournament = Tournament(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
+
+       tournamentList.append(tournament)
+
+       row = cursor.fetchone()
+
+    return tournamentList
+
+def addTournament(name, venue_name, round, player_count, last_winner_name, award_name):
+
+    try:
+
+        conn = psycopg2.connect(conn_string)
+
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT ID FROM venues WHERE name = '%s'"%(venue_name))
+
+        venue_id = cursor.fetchone()
+
+        cursor.execute("SELECT ID FROM players WHERE name = '%s'"%(last_winner_name))
+
+        player_id = cursor.fetchone()
+
+        cursor.execute("SELECT ID FROM awards WHERE name = '%s'"%(award_name))
+
+        award_id = cursor.fetchone()
+
+        cursor.execute("INSERT INTO tournaments VALUES('%s','%s','%s','%s','%s','%s','%s')"%(utils.generateID(), name, venue_id, round, player_count, player_id, award_id))
+
+        conn.commit()
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deleteTournament(id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM tournaments WHERE id = '%s'"%(id))
+
+    conn.commit()
+
+def createMatchTable():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("CREATE TABLE matches (ID VARCHAR(100) NOT NULL,TournamentID VARCHAR(100) REFERENCES tournaments (ID),VenueID VARCHAR(100) REFERENCES venues (ID),Player1 VARCHAR(100) REFERENCES players (ID),Player2 VARCHAR(10) REFERENCES players (ID),IsLive VARCHAR(1),Score VARCHAR(10),PRIMARY KEY (ID))")
+
+    conn.commit()
+
+def getMathes():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM matches ")
+
+    matchList = []
+
+    row = cursor.fetchone()
+    while row:
+
+       match = Sponsor(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
+
+       matchList.append(match)
+
+       row = cursor.fetchone()
+
+    return matchList
+
+def addMatch(tournament_name, venue_name, player_name1, player_name2, isLive, score):
+
+    try:
+
+        conn = psycopg2.connect(conn_string)
+
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT ID FROM venues WHERE name = '%s'"%(venue_name))
+
+        venue_id = cursor.fetchone()
+
+        cursor.execute("SELECT ID FROM players WHERE name = '%s'"%(player_name1))
+
+        player_id = cursor.fetchone()
+
+        cursor.execute("SELECT ID FROM players WHERE name = '%s'"%(player_name2))
+
+        player_id2 = cursor.fetchone()
+
+        cursor.execute("SELECT ID FROM tournaments WHERE name = '%s'"%(tournament_name))
+
+        award_id = cursor.fetchone()
+
+        cursor.execute("INSERT INTO matches VALUES('%s','%s','%s','%s','%s','%s','%s')"%(utils.generateID(), tournament_name, venue_name, player_name1, player_name2, isLive, score))
+
+        conn.commit()
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deleteMatch(id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM matches WHERE id = '%s'"%(id))
+
+    conn.commit()
+""" END """
 
 """ KERIM YILDIRIM """
 
