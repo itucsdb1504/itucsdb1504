@@ -37,8 +37,14 @@ def home():
     return render_template('home.html', current_time=now.ctime())
 
 @app.route('/admin_panel/player')
-def players():
-    return render_template('player.html')
+def player():
+    if(request.method == 'GET'):
+        _playerList = dbmanager.getPlayer()
+        return render_template('player.html', playerList = _playerList)
+
+    if(request.form["action"] == "add_player_action"):
+        dbmanager.addPlayer(request.form['add_name'], request.form['add_imageURL'], request.form['add_extURL'])
+        return redirect(url_for('player'))
 
 
 @app.route('/admin_panel')

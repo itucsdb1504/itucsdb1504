@@ -1,5 +1,5 @@
 class Player:
-    def __init__(self, id, firstname, lastname, age, gender, email, nationality, turned_pro, location, nickname=None, money_list_erarnings, birthday):
+    def __init__(self, id, firstname, lastname, age, gender, email, nationality, turned_pro, location, nickname=None, money_list_earnings, birthday):
         self.ID = id
         self.FirstName = firstname
         self.LastName = lastname
@@ -10,7 +10,7 @@ class Player:
         self.TurnedPro = turned_pro
         self.Location = location
         self.Nickname = nickname
-        self.MoneyListEarnings = money_list_erarnings
+        self.MoneyListEarnings = money_list_earnings
         self.Birthday = birthday
 
     def getID(self):

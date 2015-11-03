@@ -207,3 +207,60 @@ def deleteSponsor(id):
     conn.commit()
 
 """ END ANIL YILDIRIM """
+
+def createPlayerTable():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("CREATE TABLE player ( ID VARCHAR(100) NOT NULL,FIRSTNAME VARCHAR(100), LASTNAME VARCHAR(100), AGE INT, GENDER VARCHAR(100), EMAIL VARCHAR(100), NATIONALITY VARCHAR(100), TURNED_PRO VARCHAR(100), LOCATION VARCHAR(100), NICKNAME VARCHAR(100), MLE VARCHAR(100), BIRTHDAY VARCHAR(100), PRIMARY KEY (ID))")
+
+    conn.commit()
+
+def getPlayer():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM player ")
+
+    playerList = []
+
+    row = cursor.fetchone()
+    while row:
+
+       player = player(row[0],row[1],row[2],row[3])
+
+       playerList.append(player)
+
+       row = cursor.fetchone()
+
+    return playerList
+
+def addPlayer(firstname, lastname, age, gender, email, nationality, turned_pro, location, nickname, money_list_earnings, birthday):
+
+    try:
+
+        conn = psycopg2.connect(conn_string)
+
+        cursor = conn.cursor()
+
+        cursor.execute("INSERT INTO player VALUES('%s','%s','%d','%s',%s','%s',%s','%s',%s','%s',%s')"%(utils.generateID(), firstname, lastname, age, gender, email, nationality, turned_pro, location, nickname, money_list_earnings, birthday))
+
+        conn.commit()
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deletePlayer(id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM player WHERE id = '%s'"%(id))
+
+    conn.commit()
