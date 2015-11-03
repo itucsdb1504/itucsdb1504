@@ -88,6 +88,10 @@ def sponsor():
         dbmanager.addSponsor(request.form['add_name'], request.form['add_imageURL'], request.form['add_extURL'])
         return redirect(url_for('sponsor'))
 
+    if(request.form["action"] == "delete_sponsor_action"):
+        dbmanager.deleteSponsor(request.form['id'])
+        return redirect(url_for('sponsor'))
+
 @app.route('/admin_panel/tournament')
 def tournament():
     return render_template('tournament.html')

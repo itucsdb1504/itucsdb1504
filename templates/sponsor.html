@@ -1,10 +1,11 @@
-{% extends "admin_layout.html" %}
-{% block body %}
+{% extends "admin_layout.html" %} {% block body %}
 
-	<div class="form-area col-md-8 col-centered">
+<div class="form-area col-md-8 col-centered">
+	<form action="{{ url_for('sponsor') }}" method="post">
 		<table class="table">
 			<thead>
 				<tr>
+					<th>*</th>
 					<th>Name</th>
 					<th>Image URL</th>
 					<th>External URL</th>
@@ -12,36 +13,41 @@
 			</thead>
 			<tbody>
 				{% for sponsor in sponsorList: %}
-					<tr>
-						<td class="id" style="display: none;">{{sponsor.getID()}}</td>
-						<td>{{sponsor.getName()}}</td>
-						<td>{{sponsor.getImageUrl()}}</td>
-						<td>{{sponsor.getExtUrl()}}</td>
-					</tr>
+				<tr>
+					<td><input type="text" value="{{sponsor.getID()}}" name="id"
+						style="display: none" /></td>
+					<td class="id" style="display: none;">{{sponsor.getID()}}</td>
+					<td>{{sponsor.getName()}}</td>
+					<td>{{sponsor.getImageUrl()}}</td>
+					<td>{{sponsor.getExtUrl()}}</td>
+					<td><input type='submit' name="action"
+						value="delete_sponsor_action"></td>
+				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
-	</div>
+	</form>
+</div>
 
-  	<div class="form-area col-md-8 col-centered">
-				<form action="{{ url_for('sponsor') }}" method="post">
-					<br style="clear: both">
-					<h3 style="margin-bottom: 25px; text-align: center;">Match</h3>
-					<div class="form-group">
-						<input type="text" class="form-control" id="add_name"
-							placeholder="Name" required>
-					</div>
-					<div class="form-group">
-						<textarea class="form-control" type="textarea" id="add_imageURL"
-							placeholder="Image URL" rows="7"></textarea>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="add_extURL"
-							placeholder="External URL" required>
-					</div>
+<div class="form-area col-md-8 col-centered">
+	<form action="{{ url_for('sponsor') }}" method="post">
+		<br style="clear: both">
+		<h3 style="margin-bottom: 25px; text-align: center;">Sponsor</h3>
+		<div class="form-group">
+			<input type="text" class="form-control" id="add_name"
+				placeholder="Name" required>
+		</div>
+		<div class="form-group">
+			<textarea class="form-control" type="textarea" id="add_imageURL"
+				placeholder="Image URL" rows="7"></textarea>
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" id="add_extURL"
+				placeholder="External URL" required>
+		</div>
 
-					<input type="submit" name="action" value="add_sponsor_action"
-				class="btn btn-primary pull-right" />
-				</form>
-			</div>
+		<input type="submit" name="action" value="add_sponsor_action"
+			class="btn btn-primary pull-right" />
+	</form>
+</div>
 {% endblock %}

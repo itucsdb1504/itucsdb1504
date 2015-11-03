@@ -1,10 +1,11 @@
 {% extends "admin_layout.html" %} {% block body %}
 
-	<div class="form-area col-md-8 col-centered">
+<div class="form-area col-md-8 col-centered">
+	<form action="{{ url_for('comment') }}" method="post">
 		<table class="table">
 			<thead>
 				<tr>
-				    <th>*</th>
+					<th>*</th>
 					<th>Username</th>
 					<th>Title</th>
 					<th>Content</th>
@@ -13,43 +14,51 @@
 			</thead>
 			<tbody>
 				{% for comment in commentList: %}
-					<tr>
-						<td><input type="text" value="{{comment.getID()}}" name="id" style="display:none"/></td>
-						<td>{{comment.getUsername()}}</td>
-						<td>{{comment.getTitle()}}</td>
-						<td>{{comment.getContent()}}</td>
-						<td>{{comment.getDate()}}</td>
-						<td><input type='submit' name="action" value="delete_comment_action"></td>
+				<tr>
+					<td><input type="text" value="{{comment.getID()}}" name="id"
+						style="display: none" /></td>
+					<td>{{comment.getUsername()}}</td>
+					<td>{{comment.getTitle()}}</td>
+					<td>{{comment.getContent()}}</td>
+					<td>{{comment.getDate()}}</td>
+					<td><input type='submit' name="action"
+						value="delete_comment_action"></td>
 
-					</tr>
+				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
-	</div>
+	</form>
+</div>
 
-		    <div class="form-area col-md-8 col-centered">
-		        <form role="form">
-		        <br style="clear:both">
-	                   <h3 style="margin-bottom: 25px; text-align: center;">Comment</h3>
-	   				<div class="form-group">
-						<input type="text" class="form-control" id="comment_title" placeholder="Title" required>
-					</div>
-					<div class="form-group">
-						<textarea class="form-control" type="textarea" id="comment_content" placeholder="Content" rows="7"></textarea>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="comment_date" placeholder="Date" required>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="comment_username" placeholder="Username" required>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="comment_id" placeholder="ID" required>
-					</div>
+<div class="form-area col-md-8 col-centered">
+	<form role="form">
+		<br style="clear: both">
+		<h3 style="margin-bottom: 25px; text-align: center;">Comment</h3>
+		<div class="form-group">
+			<input type="text" class="form-control" id="comment_title"
+				placeholder="Title" required>
+		</div>
+		<div class="form-group">
+			<textarea class="form-control" type="textarea" id="comment_content"
+				placeholder="Content" rows="7"></textarea>
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" id="comment_date"
+				placeholder="Date" required>
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" id="comment_username"
+				placeholder="Username" required>
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" id="comment_id"
+				placeholder="ID" required>
+		</div>
 
-		      <input type="submit" name="action" value="add_comment_action"
-				class="btn btn-primary pull-right" />
-		        </form>
-		    </div>
+		<input type="submit" name="action" value="add_comment_action"
+			class="btn btn-primary pull-right" />
+	</form>
+</div>
 
 {% endblock %}
