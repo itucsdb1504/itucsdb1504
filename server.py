@@ -115,6 +115,11 @@ def venue():
         dbmanager.addVenue(request.form['add_name'], request.form['add_capacity'], request.form['add_location'], request.form['add_desc'])
         return redirect(url_for('venue'))
 
+    if(request.form["action"] == "delete_venue_action"):
+        print("DELETE")
+        dbmanager.deleteVenue(request.form['id'])
+        return redirect(url_for('venue'))
+
 
 @app.route('/admin_panel/ticket')
 def ticket():

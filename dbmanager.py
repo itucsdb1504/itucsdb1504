@@ -81,6 +81,124 @@ def deleteVenue(id):
 
     conn.commit()
 
+
+def createTicketTable():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("CREATE TABLE tickets (ID VARCHAR(100) NOT NULL,VenueID VARCHAR(100) REFERENCES venues (ID),Title VARCHAR(100),Description VARCHAR(250),Price VARCHAR(10),Date VARCHAR(20),ExtUrl VARCHAR,PRIMARY KEY (ID))")
+
+    conn.commit()
+
+def getTickets():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM tickets")
+
+    ticketList = []
+
+    row = cursor.fetchone()
+    while row:
+
+       ticket = Venue(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
+
+       ticketList.append(ticket)
+
+       row = cursor.fetchone()
+
+    return ticketList
+
+def addTicket(venue_name, title, content, price, date, ext_url):
+    try:
+
+        conn = psycopg2.connect(conn_string)
+
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT ID FROM venues WHERE name = '%s'"%(venue_name))
+
+        venue_id = cursor.fetchone()
+
+        cursor.execute("INSERT INTO tickets VALUES('%s','%s','%s','%s','%s','%s','%s')"%(utils.generateID(),venue_id, title, content, price, date, ext_url))
+
+        conn.commit()
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deleteTicket(id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM tickets WHERE id = '%s'"%(id))
+
+    conn.commit()
+
+def createChannelTable():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("CREATE TABLE channels (ID VARCHAR(100) NOT NULL,Name VARCHAR(100),ImageUrl VARCHAR,ExtUrl VARCHAR,PRIMARY KEY (ID))")
+
+    conn.commit()
+
+def getChannels():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM channels")
+
+    channelList = []
+
+    row = cursor.fetchone()
+    while row:
+
+       channel = Venue(row[0],row[1],row[2],row[3])
+
+       channelList.append(channel)
+
+       row = cursor.fetchone()
+
+    return channelList
+
+def addChannel(name, image_url, ext_url):
+
+    try:
+
+        conn = psycopg2.connect(conn_string)
+
+        cursor = conn.cursor()
+
+        cursor.execute("INSERT INTO channels VALUES('%s','%s','%s','%s','%s')"%(utils.generateID(),name, image_url,ext_url))
+
+        conn.commit()
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deleteChannel(id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM channels WHERE id = '%s'"%(id))
+
+    conn.commit()
+
 """ END ILKER YAGMUR """
 
 """ UGUR BUYUKYILMAZ """
