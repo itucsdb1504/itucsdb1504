@@ -1,7 +1,30 @@
 {% extends "admin_layout.html" %}
 {% block body %}
+
+	<div class="form-area col-md-8 col-centered">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Image URL</th>
+					<th>External URL</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for sponsor in sponsorList: %}
+					<tr>
+						<td class="id" style="display: none;">{{sponsor.getID()}}</td>
+						<td>{{sponsor.getName()}}</td>
+						<td>{{sponsor.getImageUrl()}}</td>
+						<td>{{sponsor.getExtUrl()}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
   	<div class="form-area col-md-8 col-centered">
-				<form role="form">
+				<form action="{{ url_for('sponsor') }}" method="post">
 					<br style="clear: both">
 					<h3 style="margin-bottom: 25px; text-align: center;">Match</h3>
 					<div class="form-group">
@@ -17,8 +40,8 @@
 							placeholder="External URL" required>
 					</div>
 
-					<button type="button" id="submit" name="submit"
-						class="btn btn-primary pull-right">Submit Form</button>
+					<input type="submit" name="action" value="add_sponsor_action"
+				class="btn btn-primary pull-right" />
 				</form>
 			</div>
 {% endblock %}

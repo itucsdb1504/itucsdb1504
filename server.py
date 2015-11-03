@@ -8,6 +8,9 @@ import dbmanager
 
 from flask import Flask
 from flask import render_template
+from flask import redirect
+from flask.helpers import url_for
+from flask import request
 
 app = Flask(__name__)
 
@@ -42,9 +45,16 @@ def players():
 def adminPage():
     return render_template('admin_panel.html')
 
-@app.route('/admin_panel/news')
+@app.route('/admin_panel/news', methods=['GET','POST'])
 def addNews():
-    return render_template('news.html')
+    if(request.method == 'GET'):
+        _newsList = dbmanager.getNews()
+        return render_template('news.html', newsList = _newsList)
+
+    if(request.form["action"] == "add_news_action"):
+        dbmanager.addVenue(request.form['news_title'], request.form['message'], request.form['news_imageurl'], request.form['news_date'])
+        return redirect(url_for('addNews'))
+
 
 @app.route('/admin_panel/test')
 def testHtml():
@@ -62,9 +72,15 @@ def addVideo():
 def addMatch():
     return render_template('match.html')
 
-@app.route('/admin_panel/sponsor')
+@app.route('/admin_panel/sponsor', methods=['GET','POST'])
 def sponsor():
-    return render_template('sponsor.html')
+    if(request.method == 'GET'):
+        _sponsorList = dbmanager.getSponsor()
+        return render_template('sponsor.html', sponsorList = _sponsorList)
+
+    if(request.form["action"] == "add_sponsor_action"):
+        dbmanager.addSponsor(request.form['add_name'], request.form['add_imageURL'], request.form['add_extURL'])
+        return redirect(url_for('sponsor'))
 
 @app.route('/admin_panel/tournament')
 def tournament():
@@ -82,15 +98,17 @@ def comment():
 def user():
     return render_template('user.html')
 
-@app.route('/admin_panel/venue')
+@app.route('/admin_panel/venue', methods=['GET','POST'])
 def venue():
-    if(dbmanager.isTableExists('public','venues') == False):
-        dbmanager.createVenueTable()
-        print("Venues Table Created!")
-    else:
-        print("Venues Table Already Exist!")
 
-    return render_template('venue.html')
+    if(request.method == 'GET'):
+        _venueList = dbmanager.getVenues()
+        return render_template('venue.html', venueList = _venueList)
+
+    if(request.form["action"] == "add_venue_action"):
+        dbmanager.addVenue(request.form['add_name'], request.form['add_capacity'], request.form['add_location'], request.form['add_desc'])
+        return redirect(url_for('venue'))
+
 
 @app.route('/admin_panel/ticket')
 def ticket():
