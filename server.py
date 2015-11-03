@@ -61,6 +61,10 @@ def addNews():
         dbmanager.addNews(request.form['news_title'], request.form['message'], request.form['news_imageurl'], request.form['news_date'])
         return redirect(url_for('addNews'))
 
+    if(request.form["action"] == "delete_news_action"):
+        dbmanager.deleteNews(request.form['id'])
+        return redirect(url_for('addNews'))
+
 
 @app.route('/admin_panel/test')
 def testHtml():
