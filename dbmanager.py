@@ -208,6 +208,8 @@ def deleteSponsor(id):
 
 """ END ANIL YILDIRIM """
 
+""" KERIM YILDIRIM """
+
 def createPlayerTable():
 
     conn = psycopg2.connect(conn_string)
@@ -264,3 +266,143 @@ def deletePlayer(id):
     cursor.execute("DELETE FROM player WHERE id = '%s'"%(id))
 
     conn.commit()
+
+    """END KERIM YILDIRIM """
+
+
+    """ ISIN KIRBAS """
+
+def createUserTable():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("CREATE TABLE users (ID VARCHAR(100) NOT NULL,Firstname VARCHAR(40),Lastname VARCHAR(40),Age int,Gender VARCHAR(10),Email VARCHAR(100),AccountType VARCHAR(10),PRIMARY KEY (ID))")
+
+    conn.commit()
+
+def getUsers():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM users ")
+
+    userList = []
+
+    row = cursor.fetchone()
+    while row:
+
+       user = User(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
+
+       userList.append(user)
+
+       row = cursor.fetchone()
+
+    return userList
+
+def checkUserLogin(username, password):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM userLogin WHERE username = '%s' AND password = '%s'"&(username,password))
+
+    result = cursor.fetchone()
+
+    if(result == null):
+        return False
+
+    return True
+
+def addUser(firstname, lastname, age, gender, email, account_type,username,password):
+
+    try:
+
+        conn = psycopg2.connect(conn_string)
+
+        cursor = conn.cursor()
+
+        cursor.execute("INSERT INTO users VALUES('%s','%s','%s','%s','%s','%s','%s')"%(utils.generateID(), firstname, lastname, age, gender, email, account_type))
+
+        cursor.execute("INSERT INTO userLogin VALUES('%s','%s')"%(username,password))
+
+        conn.commit()
+
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deleteUser(id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM users WHERE id = '%s'"%(id))
+
+    conn.commit()
+
+def createCommentTable():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("CREATE TABLE comments (ID VARCHAR(100) NOT NULL, Username VARCHAR(40), NewsID VARCHAR(100) REFERENCES news (ID),Title VARCHAR(100),Content VARCHAR,Date VARCHAR(20),PRIMARY KEY (ID))")
+
+    conn.commit()
+
+def getComments(news_id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM comments WHERE newsID = '%s' "&(news_id))
+
+    commentList = []
+
+    row = cursor.fetchone()
+    while row:
+
+       comment = User(row[0],row[1],row[2],row[3],row[4])
+
+       commentList.append(comment)
+
+       row = cursor.fetchone()
+
+    return commentList
+
+def addComment(username, title, content, date):
+
+    try:
+
+        conn = psycopg2.connect(conn_string)
+
+        cursor = conn.cursor()
+
+        cursor.execute("INSERT INTO comments VALUES('%s','%s','%s','%s','%s')"%(utils.generateID(), username, title, content, date))
+
+        conn.commit()
+
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deleteComment(id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM comments WHERE id = '%s'"%(id))
+
+    conn.commit()
+
+""" END """
