@@ -622,7 +622,11 @@ def getComments(news_id):
 
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM comments WHERE newsID = '%s' "&(news_id))
+    if(news_id != "null"):
+        cursor.execute("SELECT * FROM comments WHERE newsID = '%s' "&(news_id))
+
+    else:
+        cursor.execute("SELECT * FROM comments")
 
     commentList = []
 
