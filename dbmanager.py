@@ -28,7 +28,7 @@ def createVenueTable():
 
     conn.commit()
 
-def getVenues():
+def getVenues(conn):
 
     '''if(isTableExists('public','venues') == False):
         createVenueTable()
@@ -36,7 +36,7 @@ def getVenues():
     else:
         print("Venues Table Already Exist!")'''
 
-    conn = psycopg2.connect(conn_string)
+    #conn = psycopg2.connect(conn_string2)
 
     cursor = conn.cursor()
 

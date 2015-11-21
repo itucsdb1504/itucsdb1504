@@ -1,5 +1,5 @@
 import datetime
-import psycopg2
+import psycopg2 as dbapi2
 import json
 import os
 import re
@@ -126,19 +126,19 @@ def user():
 
 @app.route('/admin_panel/venue', methods=['GET','POST'])
 def venue():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _venueList = dbmanager.getVenues(connection)
+            return render_template('venue.html', venueList = _venueList)
 
-    if(request.method == 'GET'):
-        _venueList = dbmanager.getVenues()
-        return render_template('venue.html', venueList = _venueList)
+        if(request.form["action"] == "add_venue_action"):
+            dbmanager.addVenue(request.form['add_name'], request.form['add_capacity'], request.form['add_location'], request.form['add_desc'])
+            return redirect(url_for('venue'))
 
-    if(request.form["action"] == "add_venue_action"):
-        dbmanager.addVenue(request.form['add_name'], request.form['add_capacity'], request.form['add_location'], request.form['add_desc'])
-        return redirect(url_for('venue'))
-
-    if(request.form["action"] == "delete_venue_action"):
-        print("DELETE")
-        dbmanager.deleteVenue(request.form['id'])
-        return redirect(url_for('venue'))
+        if(request.form["action"] == "delete_venue_action"):
+            print("DELETE")
+            dbmanager.deleteVenue(request.form['id'])
+            return redirect(url_for('venue'))
 
 
 @app.route('/admin_panel/ticket')
@@ -153,17 +153,13 @@ if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
         port, debug = int(VCAP_APP_PORT), False
-        logging.info("Error 11")
     else:
         port, debug = 5000, True
-        logging.info("Error 12")
 
     VCAP_SERVICES = os.getenv('VCAP_SERVICES')
     if VCAP_SERVICES is not None:
         app.config['dsn'] = get_elephantsql_dsn(VCAP_SERVICES)
-        logging.info("Error 21")
     else:
         app.config['dsn'] = """user='vagrant' password='vagrant' host='localhost' port=54321 dbname='itucsdb'"""
-        logging.info("Error 22")
 
     app.run(host='0.0.0.0', port=port, debug=debug)
