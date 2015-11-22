@@ -196,7 +196,7 @@ def venue():
             return redirect(url_for('venue'))
 
         if(request.form["action"] == "delete_venue_action"):
-            dbmanager.deleteVenue(request.args.get('id'), connection)
+            dbmanager.deleteVenue(request.form['id'], connection)
             return redirect(url_for('venue'))
 
 @app.route('/admin_panel/venue/<int:postID>', methods=['DELETE'])
