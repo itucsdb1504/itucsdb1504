@@ -54,17 +54,18 @@ def adminPage():
 
 @app.route('/admin_panel/news', methods=['GET','POST'])
 def addNews():
-    if(request.method == 'GET'):
-        _newsList = dbmanager.getNews()
-        return render_template('news.html', newsList = _newsList)
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _newsList = dbmanager.getNews(connection)
+            return render_template('news.html', newsList = _newsList)
 
-    if(request.form["action"] == "add_news_action"):
-        dbmanager.addNews(request.form['news_title'], request.form['message'], request.form['news_imageurl'], request.form['news_date'])
-        return redirect(url_for('addNews'))
+        if(request.form["action"] == "add_news_action"):
+            dbmanager.addNews(request.form['news_title'], request.form['message'], request.form['news_imageurl'], request.form['news_date'], connection)
+            return redirect(url_for('addNews'))
 
-    if(request.form["action"] == "delete_news_action"):
-        dbmanager.deleteNews(request.form['id'])
-        return redirect(url_for('addNews'))
+        if(request.form["action"] == "delete_news_action"):
+            dbmanager.deleteNews(request.form['id'], connection)
+            return redirect(url_for('addNews'))
 
 
 @app.route('/admin_panel/test')
@@ -73,11 +74,39 @@ def testHtml():
 
 @app.route('/admin_panel/record')
 def addRecord():
-    return render_template('record.html')
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _recordList = dbmanager.getRecords(connection)
+            return render_template('record.html', recordList = _recordList)
+
+        if(request.form["action"] == "add_record_action"):
+            print("asdd")
+            dbmanager.addRecord(request.form['record_desc'], request.form['player_name'], request.form['video_url'],request.form['record_date'] ,connection)
+            print("bbb")
+            return redirect(url_for('addRecord'))
+
+        if(request.form["action"] == "delete_record_action"):
+            dbmanager.deleteRecord(request.form['id'], connection)
+            return redirect(url_for('addRecord'))
+
+        return render_template('record.html')
 
 @app.route('/admin_panel/video')
 def addVideo():
-    return render_template('video.html')
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _videoList = dbmanager.getVideos(connection)
+            return render_template('video.html', videoList = _videoList)
+
+        if(request.form["action"] == "add_video_action"):
+            dbmanager.addVideo(request.form['add_video_title'], request.form['add_ext_url'], request.form['add_source_type'],connection)
+            return redirect(url_for('addVideo'))
+
+        if(request.form["action"] == "delete_video_action"):
+            dbmanager.deleteVideo(request.form['id'], connection)
+            return redirect(url_for('addVideo'))
+
+        return render_template('video.html')
 
 @app.route('/admin_panel/match')
 def addMatch():

@@ -10,6 +10,8 @@ class Record:
         self.PlayerID = player_id
         self.VideoID = video_id
         self.Date = date
+        self.PlayerName = " "
+        self.VideoUrl = " "
 
     def getID(self):
         return self.ID
@@ -19,6 +21,12 @@ class Record:
 
     def getPlayerID(self):
         return self.PlayerID
+
+    def getPlayerName(self):
+        return self.PlayerName
+
+    def getVideoUrl(self):
+        return self.VideoUrl
 
     def getVideoID(self):
         return self.VideoID
