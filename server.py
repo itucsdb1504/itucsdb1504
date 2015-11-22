@@ -110,25 +110,56 @@ def addVideo():
 
 @app.route('/admin_panel/match')
 def addMatch():
-    return render_template('match.html')
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _matchList = dbmanager.getMathes(connection)
+            return render_template('match.html', matchList = _matchList)
+
+        if(request.form["action"] == "add_match_action"):
+            dbmanager.addMatch(request.form['add_tournamentName'], request.form['add_venueName'], request.form['add_player1'],request.form['add_player2'], request.form['add_isLive'], request.form['add_score'],connection)
+            return redirect(url_for('addMatch'))
+
+        if(request.form["action"] == "delete_match_action"):
+            dbmanager.deleteVideo(request.form['id'], connection)
+            return redirect(url_for('addMatch'))
+
+        return render_template('match.html')
+
 
 @app.route('/admin_panel/sponsor', methods=['GET','POST'])
 def sponsor():
-    if(request.method == 'GET'):
-        _sponsorList = dbmanager.getSponsor()
-        return render_template('sponsor.html', sponsorList = _sponsorList)
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _sponsorList = dbmanager.getSponsor(connection)
+            return render_template('sponsor.html', sponsorList = _sponsorList)
 
-    if(request.form["action"] == "add_sponsor_action"):
-        dbmanager.addSponsor(request.form['add_name'], request.form['add_imageURL'], request.form['add_extURL'])
-        return redirect(url_for('sponsor'))
+        if(request.form["action"] == "add_sponsor_action"):
+            dbmanager.addSponsor(request.form['add_name'], request.form['add_imageURL'], request.form['add_extURL'], connection)
+            return redirect(url_for('sponsor'))
 
-    if(request.form["action"] == "delete_sponsor_action"):
-        dbmanager.deleteSponsor(request.form['id'])
-        return redirect(url_for('sponsor'))
+        if(request.form["action"] == "delete_sponsor_action"):
+            dbmanager.deleteSponsor(request.form['id'], connection)
+            return redirect(url_for('sponsor'))
+
+        return render_template('sponsor.html')
 
 @app.route('/admin_panel/tournament')
 def tournament():
-    return render_template('tournament.html')
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _tournamentList = dbmanager.getTournaments(connection)
+            return render_template('tournament.html', tournamentList = _tournamentList)
+
+        if(request.form["action"] == "add_sponsor_action"):
+            dbmanager.addTournament(request.form['add_name'], request.form['add_venueName'], request.form['add_round'],request.form['add_player_count'], request.form['add_lastWinnerName'], request.form['add_awardName'], connection)
+            return redirect(url_for('tournament'))
+
+        if(request.form["action"] == "delete_sponsor_action"):
+            dbmanager.deleteTournament(request.form['id'], connection)
+            return redirect(url_for('tournament'))
+
+        return render_template('tournament.html')
+
 
 @app.route('/admin_panel/advertise')
 def advertise():
