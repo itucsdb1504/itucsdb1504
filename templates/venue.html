@@ -15,7 +15,7 @@
 				<tbody>
 					{% for venue in venueList: %}
 						<tr>
-							<td><input type="text" value={{venue.getID()}} name="id" style="display:none"/></td>
+							<td><input type="hidden" value="{{ venue.getID() }}" name="id" /></td>
 							<td>{{venue.getName()}}</td>
 							<td>{{venue.getCapacity()}}</td>
 							<td>{{venue.getLocation()}}</td>
