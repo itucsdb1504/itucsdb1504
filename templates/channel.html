@@ -1,19 +1,48 @@
 {% extends "admin_layout.html" %}
 {% block body %}
+
 	<div class="form-area col-md-8 col-centered">
-        <form role="form">
+		<form action="{{ url_for('channel') }}" method="post">
+			<table class="table table-striped table-hover">
+				<thead>
+				<tr>
+					<th>*</th>
+					<th>Name</th>
+					<th>Image Url</th>
+					<th>External Url</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for channel in channelList: %}
+					<tr>
+						<td><input type="text" value="{{channel.getID()}}" name="id" style="display:none"/></td>
+						<td>{{channel.getName()}}</td>
+						<td>{{channel.getImageUrl()}}</td>
+						<td>{{channel.getExtUrl()}}</td>
+						<td><input type='submit' name="action" value="delete_channel_action"></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</form>
+	</div>
+
+	<div class="form-area col-md-8 col-centered">
+        <form action="{{ url_for('channel') }}" method="post">
         <br style="clear:both">
-                 <h3 style="margin-bottom: 25px; text-align: center;">Add Channel</h3>
+              <h3 style="margin-bottom: 25px; text-align: center;">Add Channel</h3>
   				<div class="form-group">
-				<input type="text" class="form-control" id="add_news_title" placeholder="Name" required>
+				<input type="text" class="form-control" id="add_channel_name" placeholder="Name" required>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="add_news_imageurl" placeholder="Image URL" required>
+				<input type="text" class="form-control" id="add_channel_imageurl" placeholder="Image URL" required>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="add_news_date" placeholder="External URL" required>
+				<input type="text" class="form-control" id="add_channel_exturl" placeholder="External URL" required>
 			</div>
-        <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
+
+        <input type="submit" name="action" value="add_channel_action"
+		class="btn btn-primary pull-right" />
         </form>
     </div>
 {% endblock %}

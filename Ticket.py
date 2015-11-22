@@ -17,6 +17,7 @@ class Ticket:
         self.Price = price
         self.Date = date
         self.ExtUrl = ext_url
+        self.VenueName = " "
 
     def getID(self):
         utils = GeneralUtils()
@@ -25,6 +26,9 @@ class Ticket:
 
     def getVenueID(self):
         return self.VenueID
+
+    def getVenueName(self):
+        return self.VenueName
 
     def getTitle(self):
         return self.Title

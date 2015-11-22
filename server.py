@@ -37,6 +37,15 @@ def home():
     now = datetime.datetime.now()
     return render_template('home.html', current_time=now.ctime())
 
+
+@app.route('/admin_panel')
+def adminPage():
+    return render_template('admin_panel.html')
+
+@app.route('/admin_panel/test')
+def testHtml():
+    return render_template('test.html')
+
 @app.route('/admin_panel/player')
 def player():
     if(request.method == 'GET'):
@@ -46,11 +55,6 @@ def player():
     if(request.form["action"] == "add_player_action"):
         dbmanager.addPlayer(request.form['add_name'], request.form['add_imageURL'], request.form['add_extURL'])
         return redirect(url_for('player'))
-
-
-@app.route('/admin_panel')
-def adminPage():
-    return render_template('admin_panel.html')
 
 @app.route('/admin_panel/news', methods=['GET','POST'])
 def addNews():
@@ -67,10 +71,6 @@ def addNews():
             dbmanager.deleteNews(request.form['id'], connection)
             return redirect(url_for('addNews'))
 
-
-@app.route('/admin_panel/test')
-def testHtml():
-    return render_template('test.html')
 
 @app.route('/admin_panel/record')
 def addRecord():
@@ -192,22 +192,47 @@ def venue():
             return render_template('venue.html', venueList = _venueList)
 
         if(request.form["action"] == "add_venue_action"):
-            dbmanager.addVenue(request.form['add_name'], request.form['add_capacity'], request.form['add_location'], request.form['add_desc'])
+            dbmanager.addVenue(request.form['add_name'], request.form['add_capacity'], request.form['add_location'], request.form['add_desc'], connection)
             return redirect(url_for('venue'))
 
         if(request.form["action"] == "delete_venue_action"):
-            print("DELETE")
-            dbmanager.deleteVenue(request.form['id'])
+            dbmanager.deleteVenue(request.form['id'], connection)
             return redirect(url_for('venue'))
 
 
 @app.route('/admin_panel/ticket')
 def ticket():
-    return render_template('ticket.html')
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _ticketList = dbmanager.getTickets(connection)
+            return render_template('ticket.html', matchList = _matchList)
+
+        if(request.form["action"] == "add_ticket_action"):
+            dbmanager.addTicket(request.form['add_ticket_venue'], request.form['add_ticket_title'], request.form['add_ticket_content'],request.form['add_ticket_price'], request.form['add_ticket_exturl'], request.form['add_ticket_date'],connection)
+            return redirect(url_for('ticket'))
+
+        if(request.form["action"] == "delete_ticket_action"):
+            dbmanager.deleteTicket(request.form['id'], connection)
+            return redirect(url_for('ticket'))
+
+        return render_template('ticket.html')
 
 @app.route('/admin_panel/channel')
 def channel():
-    return render_template('channel.html')
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _channelList = dbmanager.getChannels(connection)
+            return render_template('channel.html', channelList = _channelList)
+
+        if(request.form["action"] == "add_channel_action"):
+            dbmanager.addChannel(request.form['add_channel_name'], request.form['add_channel_imageurl'], request.form['add_channel_exturl'], connection)
+            return redirect(url_for('channel'))
+
+        if(request.form["action"] == "delete_channel_action"):
+            dbmanager.deleteChannel(request.form['id'], connection)
+            return redirect(url_for('channel'))
+
+        return render_template('channel.html')
 
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
@@ -220,6 +245,6 @@ if __name__ == '__main__':
     if VCAP_SERVICES is not None:
         app.config['dsn'] = get_elephantsql_dsn(VCAP_SERVICES)
     else:
-        app.config['dsn'] = """user='vagrant' password='vagrant' host='localhost' port=54321 dbname='itucsdb'"""
+        app.config['dsn'] = """host='localhost' port='5432' dbname='postgres' user='postgres' password='Abcd1234'"""
 
     app.run(host='0.0.0.0', port=port, debug=debug)
