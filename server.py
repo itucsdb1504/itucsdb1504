@@ -196,9 +196,15 @@ def venue():
             return redirect(url_for('venue'))
 
         if(request.form["action"] == "delete_venue_action"):
-            dbmanager.deleteVenue(request.form['id'], connection)
+            dbmanager.deleteVenue(request.args.get('id'), connection)
             return redirect(url_for('venue'))
 
+@app.route('/admin_panel/venue/<int:postID>', methods=['DELETE'])
+def deleteVenue(postID):
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'DELETE'):
+            dbmanager.deleteVenue(postID, connection)
+            return redirect(url_for('venue'))
 
 @app.route('/admin_panel/ticket')
 def ticket():
