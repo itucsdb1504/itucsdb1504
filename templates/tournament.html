@@ -2,7 +2,7 @@
 {% block body %}
 
 	<div class="form-area col-md-8 col-centered">
-		<form action="{{ url_for('tournament') }}" method="post">
+
 			<table class="table table-striped table-hover">
 				<thead>
 				<tr>
@@ -17,20 +17,22 @@
 			</thead>
 			<tbody>
 				{% for tournament in tournamentList: %}
-					<tr>
-						<td><input type="text" value="{{tournament.getID()}}" name="id" style="display:none"/></td>
-						<td>{{tournament.getName()}}</td>
-						<td>{{tournament.getVenueName()}}</td>
-						<td>{{tournament.getRound()}}</td>
-						<td>{{tournament.getPlayerCount()}}</td>
-						<td>{{tournament.getLastWinnerName()}}</td>
-						<td>{{tournament.getAwardName()}}</td>
-						<td><input type='submit' name="action" value="delete_tournament_action"></td>
-					</tr>
+					<form action="{{ url_for('tournament') }}" method="post">
+						<tr>
+							<td><input type="text" value="{{tournament.getID()}}" name="id" style="display:none"/></td>
+							<td>{{tournament.getName()}}</td>
+							<td>{{tournament.getVenueName()}}</td>
+							<td>{{tournament.getRound()}}</td>
+							<td>{{tournament.getPlayerCount()}}</td>
+							<td>{{tournament.getLastWinnerName()}}</td>
+							<td>{{tournament.getAwardName()}}</td>
+							<td><input type='submit' name="action" value="delete_tournament_action"></td>
+						</tr>
+					</form>
 				{% endfor %}
 			</tbody>
 		</table>
-	</form>
+
 	</div>
 
 	<div class="form-area col-md-8 col-centered">
