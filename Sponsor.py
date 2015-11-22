@@ -1,4 +1,4 @@
-# Anýl Yýldýrým - 150130141
+# AnÄ±l YÄ±ldÄ±rÄ±m - 150130141
 
 # This class is responsible for sponsoring brands.
 class Sponsor:

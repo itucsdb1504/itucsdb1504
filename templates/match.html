@@ -1,15 +1,49 @@
 {% extends "admin_layout.html" %}
 {% block body %}
-  	<div class="form-area col-md-8 col-centered">
-				<form role="form">
-					<br style="clear: both">
-					<h3 style="margin-bottom: 25px; text-align: center;">Match</h3>
+
+
+	<div class="form-area col-md-8 col-centered">
+		<form action="{{ url_for('addMatch') }}" method="post">
+			<table class="table table-striped table-hover">
+				<thead>
+				<tr>
+					<th>*</th>
+					<th>Tournament</th>
+					<th>Venue</th>
+					<th>Player 1</th>
+					<th>Player 2</th>
+					<th>Is Live</th>
+					<th>Score</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for match in matchList: %}
+					<tr>
+						<td><input type="text" value="{{match.getID()}}" name="id" style="display:none"/></td>
+						<td>{{match.getTournamentName()}}</td>
+						<td>{{match.getVenueName()}}</td>
+						<td>{{match.getPlayer1Name()}}</td>
+						<td>{{match.getPlayer2Name()}}</td>
+						<td>{{match.isLive()}}</td>
+						<td>{{match.getScore()}}</td>
+						<td><input type='submit' name="action" value="delete_match_action"></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</form>
+	</div>
+
+	<div class="form-area col-md-8 col-centered">
+        <form action="{{ url_for('addMatch') }}" method="post">
+        <br style="clear:both">
+              <h3 style="margin-bottom: 25px; text-align: center;">Match</h3>
 					<div class="form-group">
-						<input type="text" class="form-control" id="add_tournamentID"
+						<input type="text" class="form-control" id="add_tournamentName"
 							placeholder="Tournament ID" required>
 					</div>
 					<div class="form-group">
-						<textarea class="form-control" type="textarea" id="add_venueID"
+						<textarea class="form-control" type="textarea" id="add_venueName"
 							placeholder="Venue ID" rows="7"></textarea>
 					</div>
 					<div class="form-group">
@@ -28,8 +62,9 @@
 						<input type="text" class="form-control" id="add_score"
 							placeholder="Score" required>
 					</div>
-					<button type="button" id="submit" name="submit"
-						class="btn btn-primary pull-right">Submit Form</button>
-				</form>
-			</div>
+
+        <input type="submit" name="action" value="add_match_action"
+		class="btn btn-primary pull-right" />
+        </form>
+    </div>
 {% endblock %}

@@ -11,6 +11,9 @@ class Tournament:
         self.PlayerCount = player_count
         self.LastWinnerID = last_winnerID
         self.AwardID = awardID
+        self.VenueName = " "
+        self.LastWinnerName = " "
+        self.AwardName = " "
 
     def getID(self):
         return self.ID
@@ -21,6 +24,9 @@ class Tournament:
     def getVenueID(self):
         return self.VenueID
 
+    def getVenueName(self):
+        return self.VenueName
+
     def getRound(self):
         return self.Round
 
@@ -30,5 +36,11 @@ class Tournament:
     def getLastWinnerID(self):
         return self.LastWinnerID
 
+    def getLastWinnerName(self):
+        return self.LastWinnerName
+
     def getAwardID(self):
         return self.AwardID
+
+    def getAwardName(self):
+        return self.AwardName

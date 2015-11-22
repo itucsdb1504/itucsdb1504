@@ -11,6 +11,10 @@ class Match:
         self.Player2 = player2
         self.IsLive = isLive
         self.Score = score
+        self.TournamentName = " "
+        self.VenueName = " "
+        self.Player1Name = " "
+        self.Player2Name = " "
 
     def getID(self):
         return self.ID
@@ -18,14 +22,26 @@ class Match:
     def getTournamentID(self):
         return self.TournamentID
 
+    def getTournamentName(self):
+        return self.TournamentName
+
     def getVenueID(self):
         return self.VenueID
+
+    def getVenueName(self):
+        return self.VenueName
 
     def getPlayer1(self):
         return self.Player1
 
+    def getPlayer1Name(self):
+        return self.Player1Name
+
     def getPlayer2(self):
         return self.Player2
+
+    def getPlayer2Name(self):
+        return self.Player2Name
 
     def isLive(self):
         return self.IsLive
