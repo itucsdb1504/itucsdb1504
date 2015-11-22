@@ -263,6 +263,121 @@ def deleteNews(id):
 
     conn.commit()
 
+def createVideosTable():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("CREATE TABLE videos (ID VARCHAR(100) NOT NULL,Title VARCHAR(100),ExtUrl VARCHAR,SourceType VARCHAR(10),PRIMARY KEY (ID))")
+
+    conn.commit()
+
+def getVideo(id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM videos WHERE id = '%s' "%(id))
+
+    row = cursor.fetchone()
+
+    video = Video(row[0],row[1],row[2],row[3])
+
+    return video
+
+def addVideo(title, ext_url, source_type):
+
+    try:
+
+        conn = psycopg2.connect(conn_string)
+
+        cursor = conn.cursor()
+
+        cursor.execute("INSERT INTO videos VALUES('%s','%s','%s','%s')"%(utils.generateID(), title, ext_url, source_type))
+
+        conn.commit()
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deleteVideo(id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM videos WHERE id = '%s'"%(id))
+
+    conn.commit()
+
+def createRecordTable():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("CREATE TABLE records (ID VARCHAR(100) NOT NULL,Description VARCHAR(200),PlayerID VARCHAR(100) REFERENCES players (ID),VideoID VARCHAR(10) REFERENCES videos (ID),Date VARCHAR(20),PRIMARY KEY (ID))")
+
+    conn.commit()
+
+def getRecords():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM records ")
+
+    recordList = []
+
+    row = cursor.fetchone()
+    while row:
+
+       record = Record(row[0],row[1],row[2],row[3],row[4])
+
+       recordList.append(record)
+
+       row = cursor.fetchone()
+
+    return recordList
+
+def addRecord(description, player_name, video_title, date):
+
+    try:
+
+        conn = psycopg2.connect(conn_string)
+
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT ID FROM players WHERE name = '%s'"%(player_name))
+
+        player_id = cursor.fetchone()
+
+        cursor.execute("SELECT ID FROM videos WHERE name = '%s'"%(video_title))
+
+        video_id = cursor.fetchone()
+
+        cursor.execute("INSERT INTO records VALUES('%s','%s','%s','%s','%s')"%(utils.generateID(), description, player_id, video_id, date))
+
+        conn.commit()
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deleteRecord(id):
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM records WHERE id = '%s'"%(id))
+
+    conn.commit()
+
 """ END UGUR BUYUKYILMAZ """
 
 """ ANIL YILDIRIM """
@@ -469,13 +584,13 @@ def deleteMatch(id):
 
 """ KERIM YILDIRIM """
 
-def createPlayerTable():
+def createPlayersTable():
 
     conn = psycopg2.connect(conn_string)
 
     cursor = conn.cursor()
 
-    cursor.execute("CREATE TABLE player ( ID VARCHAR(100) NOT NULL,FIRSTNAME VARCHAR(100), LASTNAME VARCHAR(100), AGE INT, GENDER VARCHAR(100), EMAIL VARCHAR(100), NATIONALITY VARCHAR(100), TURNED_PRO VARCHAR(100), LOCATION VARCHAR(100), NICKNAME VARCHAR(100), MLE VARCHAR(100), BIRTHDAY VARCHAR(100), PRIMARY KEY (ID))")
+    cursor.execute("CREATE TABLE players ( ID VARCHAR(100) NOT NULL,FIRSTNAME VARCHAR(100), LASTNAME VARCHAR(100), AGE INT, GENDER VARCHAR(100), EMAIL VARCHAR(100), NATIONALITY VARCHAR(100), TURNED_PRO VARCHAR(100), LOCATION VARCHAR(100), NICKNAME VARCHAR(100), MLE VARCHAR(100), BIRTHDAY VARCHAR(100), PRIMARY KEY (ID))")
 
     conn.commit()
 
@@ -485,7 +600,7 @@ def getPlayer():
 
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM player ")
+    cursor.execute("SELECT * FROM players ")
 
     playerList = []
 
@@ -508,7 +623,7 @@ def addPlayer(firstname, lastname, age, gender, email, nationality, turned_pro, 
 
         cursor = conn.cursor()
 
-        cursor.execute("INSERT INTO player VALUES('%s','%s','%d','%s',%s','%s',%s','%s',%s','%s',%s')"%(utils.generateID(), firstname, lastname, age, gender, email, nationality, turned_pro, location, nickname, money_list_earnings, birthday))
+        cursor.execute("INSERT INTO players VALUES('%s','%s','%d','%s',%s','%s',%s','%s',%s','%s',%s')"%(utils.generateID(), firstname, lastname, age, gender, email, nationality, turned_pro, location, nickname, money_list_earnings, birthday))
 
         conn.commit()
 
@@ -522,14 +637,14 @@ def deletePlayer(id):
 
     cursor = conn.cursor()
 
-    cursor.execute("DELETE FROM player WHERE id = '%s'"%(id))
+    cursor.execute("DELETE FROM players WHERE id = '%s'"%(id))
 
     conn.commit()
 
     """END KERIM YILDIRIM """
 
 
-    """ ISIN KIRBAS """
+""" ISIN KIRBAS """
 
 def createUserTable():
 
