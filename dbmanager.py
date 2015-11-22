@@ -325,7 +325,7 @@ def getRecords(conn):
 
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM records ")
+    cursor.execute("SELECT * FROM records")
 
     recordList = []
 
@@ -394,7 +394,7 @@ def getSponsor(conn):
 
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM sponsors ")
+    cursor.execute("SELECT * FROM sponsors")
 
     sponsorList = []
 

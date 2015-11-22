@@ -80,9 +80,7 @@ def addRecord():
             return render_template('record.html', recordList = _recordList)
 
         if(request.form["action"] == "add_record_action"):
-            print("asdd")
             dbmanager.addRecord(request.form['record_desc'], request.form['player_name'], request.form['video_url'],request.form['record_date'] ,connection)
-            print("bbb")
             return redirect(url_for('addRecord'))
 
         if(request.form["action"] == "delete_record_action"):
@@ -197,13 +195,6 @@ def venue():
 
         if(request.form["action"] == "delete_venue_action"):
             dbmanager.deleteVenue(request.form['id'], connection)
-            return redirect(url_for('venue'))
-
-@app.route('/admin_panel/venue/<int:postID>', methods=['DELETE'])
-def deleteVenue(postID):
-    with dbapi2.connect(app.config['dsn']) as connection:
-        if(request.method == 'DELETE'):
-            dbmanager.deleteVenue(postID, connection)
             return redirect(url_for('venue'))
 
 @app.route('/admin_panel/ticket')
