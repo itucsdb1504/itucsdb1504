@@ -1,5 +1,18 @@
 import psycopg2
 from Venue import Venue
+from News import News
+from Ticket import Ticket
+from Advertise import Advertise
+from Award import Award
+from Channel import Channel
+from Comment import Comment
+from Match import Match
+from Player import Player
+from Record import Record
+from Sponsor import Sponsor
+from Tournament import Tournament
+from User import User
+from Video import Video
 import utils
 
 conn_string = "host='localhost' port='5432' dbname='postgres' user='postgres' password='Abcd1234'"
@@ -208,7 +221,7 @@ def getNews(conn):
 
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM news ")
+    cursor.execute("SELECT * FROM news")
 
     newsList = []
 
@@ -220,7 +233,6 @@ def getNews(conn):
        newsList.append(news)
 
        row = cursor.fetchone()
-
 
     return newsList
 
