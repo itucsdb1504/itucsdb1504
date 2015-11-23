@@ -587,7 +587,7 @@ def createAwardTable():
 
     cursor = conn.cursor()
 
-    cursor.execute("CREATE TABLE awards ( ID VARCHAR(100) NOT NULL,Description VARCHAR(250),LastWinnerID VARCHAR(100),PRIMARY KEY (ID))")
+    cursor.execute("CREATE TABLE awards ( ID VARCHAR(100) NOT NULL,Description VARCHAR(250),LastWinnerID VARCHAR(100) REFERENCES awards (ID),PRIMARY KEY (ID))")
 
     conn.commit()
 
