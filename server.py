@@ -232,7 +232,7 @@ def channel():
         return render_template('channel.html')
 
 @app.route('/admin_panel/award', methods=['GET','POST'])
-def venue():
+def award():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
             _awardList = dbmanager.getAwards(connection)
