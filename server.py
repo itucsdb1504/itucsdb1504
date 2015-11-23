@@ -46,15 +46,20 @@ def adminPage():
 def testHtml():
     return render_template('test.html')
 
-@app.route('/admin_panel/player')
+@app.route('/admin_panel/player', methods=['GET','POST'])
 def player():
-    if(request.method == 'GET'):
-        _playerList = dbmanager.getPlayer()
-        return render_template('player.html', playerList = _playerList)
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _playerList = dbmanager.getPlayers(connection)
+            return render_template('player.html', playerList = _playerList)
 
-    if(request.form["action"] == "add_player_action"):
-        dbmanager.addPlayer(request.form['add_name'], request.form['add_imageURL'], request.form['add_extURL'])
-        return redirect(url_for('player'))
+        if(request.form["action"] == "add_player_action"):
+            dbmanager.addPlayer(request.form['add_firstname'], request.form['add_lastname'], request.form['add_age'], request.form['add_gender'],request.form['add_email'],request.form['add_nationality'],request.form['add_turned_pro'],request.form['add_location'],request.form['add_nickname'],request.form['add_money_list_earnings'],request.form['add_birthday'], connection)
+            return redirect(url_for('player'))
+
+        if(request.form["action"] == "delete_player_action"):
+            dbmanager.deletePlayer(request.form['id'], connection)
+            return redirect(url_for('player'))
 
 @app.route('/admin_panel/news', methods=['GET','POST'])
 def addNews():
