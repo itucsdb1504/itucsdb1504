@@ -581,6 +581,71 @@ def deleteMatch(id, conn):
 
 """ KERIM YILDIRIM """
 
+def createAwardTable():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("CREATE TABLE awards ( ID VARCHAR(100) NOT NULL,Description VARCHAR(250),LastWinnerID VARCHAR(100),PRIMARY KEY (ID))")
+
+    conn.commit()
+
+def getAwards(conn):
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM awards")
+
+    awardList = []
+
+    row = cursor.fetchone()
+    while row:
+
+       temp_award = Award(row[0],row[1],row[2],row[3],row[4])
+
+       awardList.append(temp_award)
+
+       row = cursor.fetchone()
+
+
+    return venueList
+
+def getAward(id, conn):
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM awards WHERE id = '%s'"%(id))
+
+    row = cursor.fetchone()
+
+    award = Award(row[0],row[1],row[2],row[3],row[4])
+
+    return award
+
+def addAward(description, last_winner_id, conn):
+
+    try:
+
+        cursor = conn.cursor()
+
+        cursor.execute("INSERT INTO award VALUES(%s','%s','%s')"%(utils.generateID(),description,last_winner_id))
+
+        conn.commit()
+
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deleteAward(id, conn):
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM award WHERE id = '%s'"%(id))
+
+    conn.commit()
+
 def createPlayersTable():
 
     conn = psycopg2.connect(conn_string)

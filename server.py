@@ -231,6 +231,21 @@ def channel():
 
         return render_template('channel.html')
 
+@app.route('/admin_panel/award', methods=['GET','POST'])
+def venue():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _awardList = dbmanager.getAwards(connection)
+            return render_template('award.html', awardList = _awardList)
+
+        if(request.form["action"] == "add_award_action"):
+            dbmanager.addAward(request.form['add_desc'], request.form['add_last_winner_id'], connection)
+            return redirect(url_for('award'))
+
+        if(request.form["action"] == "delete_award_action"):
+            dbmanager.deleteAward(request.form['id'], connection)
+            return redirect(url_for('award'))
+
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
