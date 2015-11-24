@@ -119,9 +119,9 @@ def getTickets(conn):
     row = cursor.fetchone()
     while row:
 
-       ticket = Venue(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
+       temp_ticket = Ticket(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
 
-       ticketList.append(ticket)
+       ticketList.append(temp_ticket)
 
        row = cursor.fetchone()
 
@@ -173,7 +173,7 @@ def getChannels(conn):
     row = cursor.fetchone()
     while row:
 
-       channel = Venue(row[0],row[1],row[2],row[3])
+       channel = Channel(row[0],row[1],row[2],row[3])
 
        channelList.append(channel)
 
@@ -621,7 +621,7 @@ def getAwards(conn):
        row = cursor.fetchone()
 
 
-    return venueList
+    return awardList
 
 def getAward(id, conn):
 
