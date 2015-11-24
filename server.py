@@ -220,7 +220,7 @@ def ticket():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
             _ticketList = dbmanager.getTickets(connection)
-            return render_template('ticket.html', matchList = _matchList)
+            return render_template('ticket.html', ticketList = _ticketList)
 
         if(request.form["action"] == "add_ticket_action"):
             dbmanager.addTicket(request.form['add_ticket_venue'], request.form['add_ticket_title'], request.form['add_ticket_content'],request.form['add_ticket_price'], request.form['add_ticket_exturl'], request.form['add_ticket_date'],connection)
@@ -229,8 +229,6 @@ def ticket():
         if(request.form["action"] == "delete_ticket_action"):
             dbmanager.deleteTicket(request.form['id'], connection)
             return redirect(url_for('ticket'))
-
-        return render_template('ticket.html')
 
 @app.route('/admin_panel/channel')
 def channel():

@@ -228,9 +228,9 @@ def getNews(conn):
     row = cursor.fetchone()
     while row:
 
-       news = News(row[0],row[1],row[2],row[3],row[4])
+       temp_news = News(row[0],row[1],row[2],row[3],row[4])
 
-       newsList.append(news)
+       newsList.append(temp_news)
 
        row = cursor.fetchone()
 
