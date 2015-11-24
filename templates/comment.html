@@ -1,7 +1,7 @@
 {% extends "admin_layout.html" %} {% block body %}
 
 <div class="form-area col-md-8 col-centered">
-
+	<form action="{{ url_for('comment') }}" method="post">
 		<table class="table">
 			<thead>
 				<tr>
@@ -14,23 +14,21 @@
 			</thead>
 			<tbody>
 				{% for comment in commentList: %}
-					<form action="{{ url_for('comment') }}" method="post">
-						<tr>
-							<td><input type="text" value="{{comment.getID()}}" name="id"
-								style="display: none" /></td>
-							<td>{{comment.getUsername()}}</td>
-							<td>{{comment.getTitle()}}</td>
-							<td>{{comment.getContent()}}</td>
-							<td>{{comment.getDate()}}</td>
-							<td><input type='submit' name="action"
-								value="delete_comment_action"></td>
+				<tr>
+					<td><input type="text" value="{{comment.getID()}}" name="id"
+						style="display: none" /></td>
+					<td>{{comment.getUsername()}}</td>
+					<td>{{comment.getTitle()}}</td>
+					<td>{{comment.getContent()}}</td>
+					<td>{{comment.getDate()}}</td>
+					<td><input type='submit' name="action"
+						value="delete_comment_action"></td>
 
-						</tr>
-					</form>
+				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
-
+	</form>
 </div>
 
 <div class="form-area col-md-8 col-centered">
