@@ -166,7 +166,20 @@ def tournament():
 
 @app.route('/admin_panel/advertise')
 def advertise():
-    return render_template('advertise.html')
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _advertiseList = dbmanager.getAdvertises(connection)
+            return render_template('advertise.html', advertiseList = _advertiseList)
+
+        if(request.form["action"] == "add_advertise_action"):
+            dbmanager.addSponsor(request.form['advertise_imageurl'], request.form['advertise_exturl'], request.form['advertise_size'], connection)
+            return redirect(url_for('advertise'))
+
+        if(request.form["action"] == "delete_advertise_action"):
+            dbmanager.deleteSponsor(request.form['id'], connection)
+            return redirect(url_for('advertise'))
+
+        return render_template('advertise.html')
 
 @app.route('/admin_panel/comment', methods=['GET','POST'])
 def comment():
