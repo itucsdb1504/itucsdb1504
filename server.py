@@ -183,18 +183,18 @@ def advertise():
 
 @app.route('/admin_panel/comment', methods=['GET','POST'])
 def comment():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _commentList = dbmanager.getComments("null")
+            return render_template('comment.html', commentList = _commentList)
 
-    if(request.method == 'GET'):
-        _commentList = dbmanager.getComments("null")
-        return render_template('comment.html', commentList = _commentList)
+        if(request.form["action"] == "add_comment_action"):
+            dbmanager.addComment(request.form['comment_username'], request.form['comment_title'], request.form['comment_content'], request.form['comment_date'])
+            return redirect(url_for('comment'))
 
-    if(request.form["action"] == "add_comment_action"):
-        dbmanager.addComment(request.form['comment_username'], request.form['comment_title'], request.form['comment_content'], request.form['comment_date'])
-        return redirect(url_for('comment'))
-
-    if(request.form["action"] == "delete_comment_action"):
-        dbmanager.deleteComment(request.form['id'])
-        return redirect(url_for('comment'))
+        if(request.form["action"] == "delete_comment_action"):
+            dbmanager.deleteComment(request.form['id'])
+            return redirect(url_for('comment'))
 
 @app.route('/admin_panel/user')
 def user():

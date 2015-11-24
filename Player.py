@@ -1,5 +1,6 @@
 class Player:
-    def __init__(self, id, firstname, lastname, age, gender, email, nationality, turned_pro, location, nickname=None, money_list_earnings, birthday):
+
+    def __init__(self, id, firstname, lastname, age, gender, email, nationality, turned_pro, location, nickname, money_list_earnings, birthday):
         self.ID = id
         self.FirstName = firstname
         self.LastName = lastname
