@@ -15,6 +15,7 @@ from User import User
 from Video import Video
 import utils
 
+
 conn_string = "host='localhost' port='5432' dbname='postgres' user='postgres' password='Abcd1234'"
 
 def isTableExists(tableSchema, tableName):
