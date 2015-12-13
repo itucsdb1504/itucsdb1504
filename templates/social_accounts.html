@@ -15,9 +15,9 @@
 					<form action="{{ url_for('socialAccounts') }}" method="post">
 						<tr>
 							<td><input type="hidden" value="{{ social_accounts.getID() }}" name="id" /></td>
-							<td>{{venue.getTwitterLink()}}</td>
-							<td>{{venue.getInstagramLink()}}</td>
-							<td>{{venue.getFacebookLink()}}</td>
+							<td>{{socialAccounts.getTwitterLink()}}</td>
+							<td>{{socialAccounts.getInstagramLink()}}</td>
+							<td>{{socialAccounts.getFacebookLink()}}</td>
 							<td><input type='submit' name="action" value="delete_social_accounts_action"></td>
 						</tr>
 					</form>
