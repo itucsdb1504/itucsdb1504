@@ -1,0 +1,51 @@
+{% extends "admin_layout.html" %} {% block body %}
+
+	<div class="form-area col-md-8 col-centered">
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th>*</th>
+					<th>Twitter account</th>
+					<th>Instagram account</th>
+					<th>Facebook account</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for socialAccounts in socialAccountsList: %}
+					<form action="{{ url_for('socialAccounts') }}" method="post">
+						<tr>
+							<td><input type="hidden" value="{{ social_accounts.getID() }}" name="id" /></td>
+							<td>{{venue.getTwitterLink()}}</td>
+							<td>{{venue.getInstagramLink()}}</td>
+							<td>{{venue.getFacebookLink()}}</td>
+							<td><input type='submit' name="action" value="delete_social_accounts_action"></td>
+						</tr>
+					</form>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="form-area col-md-8 col-centered">
+		<form action="{{ url_for('socialAccounts') }}" method="post">
+			<br style="clear: both">
+			<h3 style="margin-bottom: 25px; text-align: center;">Add Social Accounts</h3>
+			<div class="form-group">
+				<input type="text" class="form-control" name="add_twitter_link"
+					placeholder="Twitter Link" required>
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" name="add_instagram_link"
+					placeholder="Instagram Link" required>
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" name="add_facebook_link"
+					placeholder="Facebook Link" required>
+			</div>
+
+			<input type="submit" name="action" value="add_social_accounts_action"
+				class="btn btn-primary pull-right" />
+		</form>
+	</div>
+
+{% endblock %}

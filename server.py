@@ -262,6 +262,21 @@ def award():
             dbmanager.deleteAward(request.form['id'], connection)
             return redirect(url_for('award'))
 
+@app.route('/admin_panel/social_accounts', methods=['GET','POST'])
+def social_accounts():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _socialAccountsList = dbmanager.getSocialAccounts(connection)
+            return render_template('social_accounts.html', socialAccountsList = _socialAccountsList)
+
+        if(request.form["action"] == "add_social_accounts_action"):
+            dbmanager.addSocialAccountsList(request.form['add_twitter_account'], request.form['add_instagram_account'], request.form['add_facebook_account'], request.form['add_desc'], connection)
+            return redirect(url_for('social_accounts'))
+
+        if(request.form["action"] == "delete_social_accounts_action"):
+            dbmanager.deleteSocialAccountsList(request.form['id'], connection)
+            return redirect(url_for('social_accounts'))
+
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
