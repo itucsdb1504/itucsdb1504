@@ -13,6 +13,7 @@ from Sponsor import Sponsor
 from Tournament import Tournament
 from User import User
 from Video import Video
+from Social_accounts import Social_accounts
 import utils
 
 
@@ -725,6 +726,60 @@ def deletePlayer(id, conn):
 
     conn.commit()
 
+
+def createSocialAccountsTable():
+
+    conn = psycopg2.connect(conn_string)
+
+    cursor = conn.cursor()
+
+    cursor.execute("CREATE TABLE social_accounts (ID VARCHAR(100) REFERENCES players (ID), TwitterLink VARCHAR(20), InstagramLink VARCHAR(20), FacebookLink VARCHAR(20), PRIMARY KEY (ID))")
+
+    conn.commit()
+
+def getSocialAccounts(conn):
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM social_accounts")
+
+    socialAccountsList = []
+
+    row = cursor.fetchone()
+    while row:
+
+       social_account = Social_accounts(row[0],row[1],row[2],row[3])
+
+       socialAccountsListList.append(social_account)
+
+       row = cursor.fetchone()
+
+
+    return socialAccountsList
+
+def addSocialAccounts(twitter_account, instagram_account, facebook_account, conn):
+
+    try:
+
+        cursor = conn.cursor()
+
+        cursor.execute("INSERT INTO social_accounts VALUES('%s','%s','%s','%s')"%(utils.generateID(), twitter_account, instagram_account, facebook_account))
+
+        conn.commit()
+
+
+
+    except Exception as e:
+        print(str(e))
+        pass
+
+def deleteSocialAccounts(id, conn):
+
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM social_accounts WHERE id = '%s'"%(id))
+
+    conn.commit()
 
 """END KERIM YILDIRIM """
 
