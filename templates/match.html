@@ -27,7 +27,7 @@
 							<td>{{match.getPlayer2Name()}}</td>
 							<td>{{match.isLive()}}</td>
 							<td>{{match.getScore()}}</td>
-							<td><input type='submit' name="action" value="delete_match_action"></td>
+							<td><input type='submit' name="action" value="Delete"></td>
 						</tr>
 					</form>
 				{% endfor %}
@@ -41,31 +41,31 @@
         <br style="clear:both">
               <h3 style="margin-bottom: 25px; text-align: center;">Match</h3>
 					<div class="form-group">
-						<input type="text" class="form-control" id="add_tournamentName"
+						<input type="text" class="form-control" name="add_tournamentName"
 							placeholder="Tournament ID" required>
 					</div>
 					<div class="form-group">
-						<textarea class="form-control" type="textarea" id="add_venueName"
+						<textarea class="form-control" type="textarea" name="add_venueName"
 							placeholder="Venue ID" rows="7"></textarea>
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" id="add_player1"
+						<input type="text" class="form-control" name="add_player1"
 							placeholder="Player 1" required>
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" id="add_player2"
+						<input type="text" class="form-control" name="add_player2"
 							placeholder="Player 2" required>
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" id="add_isLive"
+						<input type="text" class="form-control" name="add_isLive"
 							placeholder="Is Live" required>
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" id="add_score"
+						<input type="text" class="form-control" name="add_score"
 							placeholder="Score" required>
 					</div>
 
-        <input type="submit" name="action" value="add_match_action"
+        <input type="submit" name="action" value="Add Match"
 		class="btn btn-primary pull-right" />
         </form>
     </div>
