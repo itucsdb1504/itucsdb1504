@@ -1,0 +1,43 @@
+{% extends "home_layout.html" %}
+{% block main_content %}
+	<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1" style="margin-bottom: 100px;">
+		<h2 class="post-title col-lg-8" style="height:150px;text-align:center;padding: 40px 0;">{{news.getTitle()}}</h2>
+		<p>{{news.getContent()}}</p>
+	    <p class="post-meta">{{news.getDate()}}</p>
+	</div>
+
+	<h3 style="margin-top: 100px; text-align: center;">Comments</h3>
+	{% for comment in commentList: %}
+		<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1" style="border-top: 4px dotted #e67e22;">
+			<h3 class="post-title col-lg-12" style="padding: 4px 0;">{{comment.getTitle()}}</h3>
+			<p class="col-lg-12" style="padding: 4px 0;margin:0">{{comment.getContent()}}</p>
+		</div>
+		<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1" style="padding: 4px 0;margin-top:5px;">
+			<p class="post-meta col-lg-6">User: {{comment.getUsername()}}</p>
+	    	<p class="post-meta col-lg-6" style="text-align: right;">Date: {{comment.getDate()}}</p>
+		</div>
+		<hr>
+	{% endfor %}
+
+	{% if session['loggedUser'] != ' ' %}
+
+		<div class="form-area col-lg-8 col-lg-offset-2">
+			<form action="{{ url_for('addCommentToNews') }}" method="post">
+				<br style="clear: both">
+				<h3 style="margin-bottom: 25px; text-align: center;">Add new Comment</h3>
+				<div class="form-group">
+					<input type="text" class="form-control" name="comment_title"
+						placeholder="Title" required>
+				</div>
+				<div class="form-group">
+					<textarea class="form-control" type="textarea" name="comment_content"
+						placeholder="Content" rows="7"></textarea>
+				</div>
+
+				<input type="text" name="newsid" value="{{news.getID()}}" style="display:none"/>
+				<input type="submit" name="action" value="Add Comment"
+					class="btn btn-primary pull-right" />
+			</form>
+		</div>
+	{% endif %}
+{% endblock %}
