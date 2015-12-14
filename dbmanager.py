@@ -13,12 +13,12 @@ from Sponsor import Sponsor
 from Tournament import Tournament
 from User import User
 from Video import Video
-from Social_accounts import Social_accounts
 import utils
 
-
+"""For local tests, Not used!!"""
 conn_string = "host='localhost' port='5432' dbname='postgres' user='postgres' password='Abcd1234'"
 
+"""IsTableExists and create table methods are used in begining of the project. Now, don't use."""
 def isTableExists(tableSchema, tableName):
 
     conn = psycopg2.connect(conn_string)
@@ -98,8 +98,6 @@ def deleteVenue(id, conn):
 
     conn.commit()
 
-
-
 def createTicketTable():
 
     conn = psycopg2.connect(conn_string)
@@ -126,6 +124,14 @@ def getTickets(conn):
        ticketList.append(temp_ticket)
 
        row = cursor.fetchone()
+
+    for temp_ticket in ticketList:
+
+        cursor.execute("SELECT name FROM venues WHERE id='%s'"%(temp_ticket.getVenueID()))
+
+        row2 = cursor.fetchone()
+
+        temp_ticket.VenueName = row2[0]
 
     return ticketList
 
@@ -189,7 +195,7 @@ def addChannel(name, image_url, ext_url, conn):
 
         cursor = conn.cursor()
 
-        cursor.execute("INSERT INTO channels VALUES('%s','%s','%s','%s','%s')"%(utils.generateID(),name, image_url,ext_url))
+        cursor.execute("INSERT INTO channels VALUES('%s','%s','%s','%s')"%(utils.generateID(),name, image_url,ext_url))
 
         conn.commit()
 
@@ -238,6 +244,18 @@ def getNews(conn):
 
     return newsList
 
+def getNewsWithID(id,conn):
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM news WHERE id = '%s'"%(id))
+
+    row = cursor.fetchone()
+
+    news = News(row[0],row[1],row[2],row[3],row[4])
+
+    return news
+
 def addNews(title, content, image_url, date, conn):
 
     try:
@@ -260,7 +278,6 @@ def deleteNews(id, conn):
     cursor.execute("DELETE FROM news WHERE id = '%s'"%(id))
 
     conn.commit()
-
 
 def createVideosTable():
 
@@ -351,7 +368,7 @@ def getRecords(conn):
        temp_player = getPlayer(record.PlayerID, conn)
        temp_video = getVideo(record.VideoID, conn)
 
-       record.PlayerName = temp_player.FirstName + temp_player.LastName
+       record.PlayerName = temp_player.FirstName + " " + temp_player.LastName
        record.VideoUrl = temp_video.ExtUrl
 
        recordList.append(record)
@@ -472,6 +489,26 @@ def getTournaments(conn):
 
        row = cursor.fetchone()
 
+    for temp_tournament in tournamentList:
+
+        cursor.execute("SELECT name FROM venues WHERE id='%s'"%(temp_tournament.getVenueID()))
+
+        row2 = cursor.fetchone()
+
+        temp_tournament.VenueName = row2[0]
+
+        cursor.execute("SELECT firstname,lastname FROM players WHERE id='%s'"%(temp_tournament.getLastWinnerID()))
+
+        row3 = cursor.fetchone()
+
+        temp_tournament.LastWinnerName = row3[0] + " " + row3[1]
+
+        cursor.execute("SELECT description FROM awards WHERE id='%s'"%(temp_tournament.getAwardID()))
+
+        row4 = cursor.fetchone()
+
+        temp_tournament.AwardName = row4[0]
+
     return tournamentList
 
 def getTournament(id, conn):
@@ -543,10 +580,8 @@ def getMathes(conn):
 
        match = Match(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
 
-       match.TournamentName = getTournament(match.getTournamentID(), conn)
-       match.VenueName = getVenue(match.getVenueID(), conn)
-       match.Player1Name = getPlayer(match.getPlayer1(), conn)
-       match.Player2Name = getPlayer(match.getPlayer2(), conn)
+       match.TournamentName = getTournament(match.getTournamentID(), conn).Name
+       match.VenueName = getVenue(match.getVenueID(), conn).Name
 
        matchList.append(match)
 
@@ -616,7 +651,7 @@ def getAwards(conn):
     row = cursor.fetchone()
     while row:
 
-       temp_award = Award(row[0],row[1],row[2],row[3],row[4])
+       temp_award = Award(row[0],row[1],row[2])
 
        awardList.append(temp_award)
 
@@ -633,7 +668,7 @@ def getAward(id, conn):
 
     row = cursor.fetchone()
 
-    award = Award(row[0],row[1],row[2],row[3],row[4])
+    award = Award(row[0],row[1],row[2])
 
     return award
 
@@ -643,7 +678,7 @@ def addAward(description, last_winner_id, conn):
 
         cursor = conn.cursor()
 
-        cursor.execute("INSERT INTO award VALUES(%s','%s','%s')"%(utils.generateID(),description,last_winner_id))
+        cursor.execute("INSERT INTO awards VALUES('%s','%s','%s')"%(utils.generateID(),description,last_winner_id))
 
         conn.commit()
 
@@ -656,7 +691,7 @@ def deleteAward(id, conn):
 
     cursor = conn.cursor()
 
-    cursor.execute("DELETE FROM award WHERE id = '%s'"%(id))
+    cursor.execute("DELETE FROM awards WHERE id = '%s'"%(id))
 
     conn.commit()
 
@@ -681,12 +716,19 @@ def getPlayers(conn):
     row = cursor.fetchone()
     while row:
 
-       player = player(row[0],row[1],row[2],row[3])
+       _player = Player(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11])
 
-       playerList.append(player)
+       playerList.append(_player)
 
        row = cursor.fetchone()
 
+    """Getting social information of players from social_accounts table"""
+    for temp_player in playerList:
+        cursor.execute("SELECT * FROM social_accounts WHERE id = '%s'"%(temp_player.getID()))
+        row2 = cursor.fetchone()
+        temp_player.Twitter = row2[1]
+        temp_player.Instagram = row2[2]
+        temp_player.Facebook = row2[3]
 
     return playerList
 
@@ -698,10 +740,9 @@ def getPlayer(id,conn):
 
     row = cursor.fetchone()
 
-    player = player(row[0],row[1],row[2],row[3])
+    _player = Player(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11])
 
-
-    return player
+    return _player
 
 def addPlayer(firstname, lastname, age, gender, email, nationality, turned_pro, location, nickname, money_list_earnings, birthday, conn):
 
@@ -726,55 +767,17 @@ def deletePlayer(id, conn):
 
     conn.commit()
 
-
-def createSocialAccountsTable():
-
-    conn = psycopg2.connect(conn_string)
+def addPlayerSocial(player_id,twitter_url,instagram_url,facebook_url,conn):
 
     cursor = conn.cursor()
 
-    cursor.execute("CREATE TABLE social_accounts (ID VARCHAR(100) REFERENCES players (ID), TwitterLink VARCHAR(20), InstagramLink VARCHAR(20), FacebookLink VARCHAR(20), PRIMARY KEY (ID))")
+    created_id = utils.generateID()
+
+    cursor.execute("INSERT INTO social_accounts VALUES('%s','%s','%s','%s')"%(created_id, twitter_url, instagram_url, facebook_url))
 
     conn.commit()
 
-def getSocialAccounts(conn):
-
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM social_accounts")
-
-    socialAccountsList = []
-
-    row = cursor.fetchone()
-    while row:
-
-       social_account = Social_accounts(row[0],row[1],row[2],row[3])
-
-       socialAccountsListList.append(social_account)
-
-       row = cursor.fetchone()
-
-
-    return socialAccountsList
-
-def addSocialAccounts(twitter_account, instagram_account, facebook_account, conn):
-
-    try:
-
-        cursor = conn.cursor()
-
-        cursor.execute("INSERT INTO social_accounts VALUES('%s','%s','%s','%s')"%(utils.generateID(), twitter_account, instagram_account, facebook_account))
-
-        conn.commit()
-
-
-
-    except Exception as e:
-        print(str(e))
-        pass
-
-def deleteSocialAccounts(id, conn):
-
+def deletePlayerSocial(id,conn):
     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM social_accounts WHERE id = '%s'"%(id))
@@ -795,9 +798,7 @@ def createUserTable():
 
     conn.commit()
 
-def getUsers():
-
-    conn = psycopg2.connect(conn_string)
+def getUsers(conn):
 
     cursor = conn.cursor()
 
@@ -816,43 +817,48 @@ def getUsers():
 
     return userList
 
-def checkUserLogin(username, password):
-
-    conn = psycopg2.connect(conn_string)
+def checkUserLogin(username, password,conn):
 
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM userLogin WHERE username = '%s' AND password = '%s'"&(username,password))
+    cursor.execute("SELECT * FROM userLogin WHERE userName = '%s' AND passWord = '%s'"%(username,password))
 
     result = cursor.fetchone()
 
-    if(result == null):
-        return False
+    if result is None:
+        return None
 
-    return True
+    cursor.execute("SELECT * FROM users WHERE id = '%s'"%(result[0]))
 
-def addUser(firstname, lastname, age, gender, email, account_type,username,password):
+    row = cursor.fetchone()
+
+    _user = User(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
+
+    _user.Username = result[1]
+
+    return _user
+
+def addUser(firstname, lastname, age, gender, email,username,password,conn):
 
     try:
 
-        conn = psycopg2.connect(conn_string)
-
         cursor = conn.cursor()
 
-        cursor.execute("INSERT INTO users VALUES('%s','%s','%s','%s','%s','%s','%s')"%(utils.generateID(), firstname, lastname, age, gender, email, account_type))
+        created_id = utils.generateID()
 
-        cursor.execute("INSERT INTO userLogin VALUES('%s','%s')"%(username,password))
+        cursor.execute("INSERT INTO users VALUES('%s','%s','%s','%s','%s','%s','%s')"%(created_id, firstname, lastname, age, gender, email, 'User'))
+
+        cursor.execute("INSERT INTO userLogin VALUES('%s','%s','%s')"%(created_id,username,password))
 
         conn.commit()
 
+        return 'OK'
 
     except Exception as e:
         print(str(e))
-        pass
+        return 'SameUsername'
 
-def deleteUser(id):
-
-    conn = psycopg2.connect(conn_string)
+def deleteUser(id,conn):
 
     cursor = conn.cursor()
 
@@ -875,7 +881,7 @@ def getComments(news_id, conn):
     cursor = conn.cursor()
 
     if(news_id != "null"):
-        cursor.execute("SELECT * FROM comments WHERE newsID = '%s' "&(news_id))
+        cursor.execute("SELECT * FROM comments WHERE newsID = '%s' "%(news_id))
 
     else:
         cursor.execute("SELECT * FROM comments")
@@ -885,26 +891,24 @@ def getComments(news_id, conn):
     row = cursor.fetchone()
     while row:
 
-       comment = User(row[0],row[1],row[2],row[3],row[4])
+       _comment = Comment(row[0],row[1],row[3],row[4],row[5])
 
-       commentList.append(comment)
+       commentList.append(_comment)
 
        row = cursor.fetchone()
 
 
     return commentList
 
-def addComment(username, title, content, date, conn):
+def addComment(username, newsid ,title, content, date, conn):
 
     try:
 
         cursor = conn.cursor()
 
-        cursor.execute("INSERT INTO comments VALUES('%s','%s','%s','%s','%s')"%(utils.generateID(), username, title, content, date))
+        cursor.execute("INSERT INTO comments VALUES('%s','%s','%s','%s','%s','%s')"%(utils.generateID(), username, newsid, title, content, date))
 
         conn.commit()
-
-
 
     except Exception as e:
         print(str(e))
@@ -917,7 +921,6 @@ def deleteComment(id, conn):
     cursor.execute("DELETE FROM comments WHERE id = '%s'"%(id))
 
     conn.commit()
-
 
 def createAdvertiseTable():
 
@@ -972,6 +975,5 @@ def deleteAdvertise(id, conn):
     cursor.execute("DELETE FROM advertises WHERE id = '%s'"%(id))
 
     conn.commit()
-
 
 """ END """
