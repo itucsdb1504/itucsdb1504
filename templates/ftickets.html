@@ -1,0 +1,35 @@
+{% extends "home_layout.html" %}
+{% block main_content %}
+<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+	{% for ticket in ticketList: %}
+	    <div class="player-list" >
+	    	<div class="col-lg-4 title" style="background-color: #34495e">
+	    		<h2 class="col-lg-12" style="color: #fff">
+                	{{ticket.getDate()}}
+	            </h2>
+	    	</div>
+	    	<div class="col-lg-8" style="margin-top:20px">
+	            <h5 class="col-lg-12" >
+	                {{ticket.getTitle()}}
+	            </h5>
+	            <h6 class="col-lg-12" style="color: #666">
+	                {{ticket.getContent()}}
+	            </h6>
+	            <div class="col-lg-12" style="color: #2b2b2b">
+	            	<h6 class="col-lg-4" style="color: #666">
+	                	Location: {{ticket.getVenueName()}}
+	            	</h6>
+	            	<h6 class="col-lg-4" style="color: #666">
+	                	Price: {{ticket.getPrice()}}
+	            	</h6>
+	            	<a href="{{ticket.getExtUrl()}}" target="_blank" class="col-lg-4" style="color: #666">
+						Read More
+	            	</a>
+	            </div>
+	    	</div>
+
+	    </div>
+	    <hr>
+    {% endfor %}
+</div>
+{% endblock %}

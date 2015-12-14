@@ -20,9 +20,7 @@ class Ticket:
         self.VenueName = " "
 
     def getID(self):
-        utils = GeneralUtils()
-
-        return utils.generateID()
+        return self.ID
 
     def getVenueID(self):
         return self.VenueID
