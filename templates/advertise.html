@@ -1,7 +1,7 @@
 {% extends "admin_layout.html" %} {% block body %}
 
 	<div class="form-area col-md-8 col-centered">
-		<form action="{{ url_for('advertise') }}" method="post">
+
 			<table class="table table-striped table-hover">
 				<thead>
 				<tr>
@@ -13,17 +13,19 @@
 			</thead>
 			<tbody>
 				{% for advertise in advertiseList: %}
-					<tr>
-						<td><input type="text" value="{{advertise.getID()}}" name="id" style="display:none"/></td>
-						<td>{{advertise.getImageUrl()}}</td>
-						<td>{{advertise.getExtUrl()}}</td>
-						<td>{{advertise.getSize()}}</td>
-						<td><input type='submit' name="action" value="delete_advertise_action"></td>
-					</tr>
+					<form action="{{ url_for('advertise') }}" method="post">
+						<tr>
+							<td><input type="text" value="{{advertise.getID()}}" name="id" style="display:none"/></td>
+							<td>{{advertise.getImageUrl()}}</td>
+							<td>{{advertise.getExtUrl()}}</td>
+							<td>{{advertise.getSize()}}</td>
+							<td><input type='submit' name="action" value="Delete"></td>
+						</tr>
+					</form>
 				{% endfor %}
 			</tbody>
 		</table>
-	</form>
+
 	</div>
 
 	<div class="form-area col-md-8 col-centered">
@@ -31,16 +33,16 @@
         <br style="clear:both">
               <h3 style="margin-bottom: 25px; text-align: center;">Advertise</h3>
 					<div class="form-group">
-						<input type="text" class="form-control" id="advertise_imageurl" placeholder="Image URL" required>
+						<input type="text" class="form-control" name="advertise_imageurl" placeholder="Image URL" required>
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" id="advertise_exturl" placeholder="Ext URL" required>
+						<input type="text" class="form-control" name="advertise_exturl" placeholder="Ext URL" required>
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" id="advertise_size" placeholder="Size" required>
+						<input type="text" class="form-control" name="advertise_size" placeholder="Size" required>
 					</div>
 
-        <input type="submit" name="action" value="add_advertise_action"
+        <input type="submit" name="action" value="Add Advertise"
 		class="btn btn-primary pull-right" />
         </form>
     </div>
