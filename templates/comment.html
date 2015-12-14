@@ -22,7 +22,7 @@
 						<td>{{comment.getContent()}}</td>
 						<td>{{comment.getDate()}}</td>
 						<td><input type='submit' name="action"
-							value="delete_comment_action"></td>
+							value="Delete"></td>
 
 					</tr>
 				</form>
@@ -36,27 +36,27 @@
 		<br style="clear: both">
 		<h3 style="margin-bottom: 25px; text-align: center;">Comment</h3>
 		<div class="form-group">
-			<input type="text" class="form-control" id="comment_title"
+			<input type="text" class="form-control" name="comment_title"
 				placeholder="Title" required>
 		</div>
 		<div class="form-group">
-			<textarea class="form-control" type="textarea" id="comment_content"
+			<textarea class="form-control" type="textarea" name="comment_content"
 				placeholder="Content" rows="7"></textarea>
 		</div>
 		<div class="form-group">
-			<input type="text" class="form-control" id="comment_date"
+			<input type="text" class="form-control" name="comment_date"
 				placeholder="Date" required>
 		</div>
 		<div class="form-group">
-			<input type="text" class="form-control" id="comment_username"
+			<input type="text" class="form-control" name="comment_username"
 				placeholder="Username" required>
 		</div>
 		<div class="form-group">
-			<input type="text" class="form-control" id="comment_id"
+			<input type="text" class="form-control" name="comment_id"
 				placeholder="ID" required>
 		</div>
 
-		<input type="submit" name="action" value="add_comment_action"
+		<input type="submit" name="action" value="Add Comment"
 			class="btn btn-primary pull-right" />
 	</form>
 </div>
