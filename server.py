@@ -6,15 +6,18 @@ import re
 import logging
 
 import dbmanager
+from layoutInfo import layoutInfo
 
 from flask import Flask
 from flask import render_template
 from flask import redirect
 from flask.helpers import url_for
 from flask import request
+from flask import session
 
 app = Flask(__name__)
-
+app.config['SESSION_TYPE'] = 'memcached'
+app.config['SECRET_KEY'] = 'itucsdb1504'
 
 def get_elephantsql_dsn(vcap_services):
     """Returns the data source name for ElephantSQL."""
@@ -31,15 +34,136 @@ def get_elephantsql_dsn(vcap_services):
 @app.route('/')
 def home():
 
-    '''if(dbmanager.isTableExists("public", "mytable")):
-       print("OK")'''
+    return redirect('/news')
 
-    now = datetime.datetime.now()
-    return render_template('home.html', current_time=now.ctime())
+@app.route('/news')
+def news():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        _newsList = dbmanager.getNews(connection)
+        _sponsorList = dbmanager.getSponsor(connection)
+        _channelList = dbmanager.getChannels(connection)
+        _info = layoutInfo('All about Snooker','Daily News for Snooker','static/img/home-bg.jpg')
+        return render_template('fnews.html', newsList = _newsList, info = _info, sponsorList = _sponsorList, channelList = _channelList)
 
+@app.route('/news/<newsid>')
+def newsDetail(newsid):
+    with dbapi2.connect(app.config['dsn']) as connection:
+        _news = dbmanager.getNewsWithID(newsid,connection)
+        _sponsorList = dbmanager.getSponsor(connection)
+        _channelList = dbmanager.getChannels(connection)
+        _info = layoutInfo(_news.getTitle(),'',_news.getImageUrl())
+        _comments = dbmanager.getComments(newsid,connection)
+        return render_template('/fnews_detail.html',news = _news, info = _info, commentList = _comments, sponsorList = _sponsorList, channelList = _channelList)
+
+@app.route('/news/addcomment', methods=['GET','POST'])
+def addCommentToNews():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        news_id = ""
+        if(request.form["action"] == "Add Comment"):
+            _newsid = request.form['newsid']
+            user_id = session.get('loggedUser')
+            dbmanager.addComment(user_id,_newsid,request.form['comment_title'], request.form['comment_content'],datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), connection)
+
+        return redirect(url_for('newsDetail', newsid = _newsid))
+
+@app.route('/tickets')
+def ftickets():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        _ticketList = dbmanager.getTickets(connection)
+        _sponsorList = dbmanager.getSponsor(connection)
+        _channelList = dbmanager.getChannels(connection)
+        _info = layoutInfo('If you go step by step, with confidence, you can go far.','RONNIE O-SULLIVAN','static/img/players.jpg')
+        return render_template('ftickets.html', ticketList = _ticketList, info = _info, sponsorList = _sponsorList, channelList = _channelList)
+
+@app.route('/matches')
+def fmatches():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        _matchList = dbmanager.getMathes(connection)
+        _sponsorList = dbmanager.getSponsor(connection)
+        _channelList = dbmanager.getChannels(connection)
+        _info = layoutInfo('Looking for perfection is the only way.','RONNIE O-SULLIVAN','static/img/players.jpg')
+        return render_template('fmatches.html', matchList = _matchList, info = _info, sponsorList = _sponsorList, channelList = _channelList)
+
+@app.route('/records')
+def frecords():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        _recordList = dbmanager.getRecords(connection)
+        _sponsorList = dbmanager.getSponsor(connection)
+        _channelList = dbmanager.getChannels(connection)
+        _info = layoutInfo('Never mind what others do; do better than yourself.','RONNIE O-SULLIVAN','static/img/players.jpg')
+        return render_template('frecords.html', recordList = _recordList, info = _info, sponsorList = _sponsorList, channelList = _channelList)
+
+
+@app.route('/tournaments')
+def ftournaments():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        _tourList = dbmanager.getTournaments(connection)
+        _sponsorList = dbmanager.getSponsor(connection)
+        _channelList = dbmanager.getChannels(connection)
+        _info = layoutInfo('Snooker is about having the best offensive play possible.','RONNIE O-SULLIVAN','static/img/players.jpg')
+        return render_template('ftournament.html', tournamentList = _tourList, info = _info, sponsorList = _sponsorList, channelList = _channelList)
+
+@app.route('/players')
+def fplayers():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        _playerList = dbmanager.getPlayers(connection)
+        _sponsorList = dbmanager.getSponsor(connection)
+        _channelList = dbmanager.getChannels(connection)
+        _info = layoutInfo('The game of snooker has been everything to me.','RONNIE O-SULLIVAN','static/img/players.jpg')
+        return render_template('fplayers.html', playerList = _playerList, info = _info, sponsorList = _sponsorList, channelList = _channelList)
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _info = layoutInfo('All about Snooker','Daily News for Snooker','static/img/home-bg.jpg')
+            _advertiseList = dbmanager.getAdvertises(connection)
+            if(session.get('loginStatus') == 'WrongPass'):
+                _info = layoutInfo('All about Snooker','But you Enter Wrong Username or Password!!','static/img/home-bg.jpg')
+            if(session.get('loginStatus') == 'SameUsername'):
+                _info = layoutInfo('All about Snooker','But Username is used by Another User!!','static/img/home-bg.jpg')
+
+            return render_template('login.html', info = _info,advertiseList=_advertiseList)
+
+        if(request.form["action"] == "Log In"):
+            user = dbmanager.checkUserLogin(request.form['username'], request.form['password'], connection)
+            if user is not None:
+                session['loggedUser'] = user.Username
+                session['loggedUserID'] = user.getID()
+                session['loginStatus'] = 'OK'
+                if(user.getAccountType() == 'King'):
+                    session['loginStatus'] = 'King'
+                    return redirect(url_for('adminPage'))
+                else:
+                    session['loginStatus'] = 'Normal'
+                    return redirect(url_for('home'))
+            else:
+                session['loggedUser'] = ' '
+                session['loggedUserID'] = ' '
+                session['loginStatus'] = 'WrongPass'
+                return redirect(url_for('login'))
+
+        if(request.form["action"] == "Register"):
+            result = dbmanager.addUser(request.form['firstname'],request.form['lastname'], request.form['age'],request.form['gender'],request.form['email'],request.form['username'],request.form['password'],connection)
+            session['loggedUser'] = ' '
+            session['loggedUserID'] = ' '
+            session['loginStatus'] = result
+            if(result != 'OK'):
+                return redirect(url_for('login'))
+            return redirect(url_for('home'))
+
+@app.route('/loginOut', methods=['GET','POST'])
+def loginOut():
+    session['loggedUser'] = ' '
+    session['loggedUserID'] = ' '
+    session['loginStatus'] = 'OK'
+    return redirect(url_for('home'))
 
 @app.route('/admin_panel')
 def adminPage():
+    if(session['loggedUser'] == ' ' or session['loginStatus'] != 'King'):
+        return redirect('/')
+
     return render_template('admin_panel.html')
 
 @app.route('/admin_panel/test')
@@ -49,6 +173,7 @@ def testHtml():
 @app.route('/admin_panel/player', methods=['GET','POST'])
 def player():
     with dbapi2.connect(app.config['dsn']) as connection:
+
         if(request.method == 'GET'):
             _playerList = dbmanager.getPlayers(connection)
             return render_template('player.html', playerList = _playerList)
@@ -64,6 +189,7 @@ def player():
 @app.route('/admin_panel/news', methods=['GET','POST'])
 def addNews():
     with dbapi2.connect(app.config['dsn']) as connection:
+
         if(request.method == 'GET'):
             _newsList = dbmanager.getNews(connection)
             return render_template('news.html', newsList = _newsList)
@@ -77,7 +203,7 @@ def addNews():
             return redirect(url_for('addNews'))
 
 
-@app.route('/admin_panel/record')
+@app.route('/admin_panel/record', methods=['GET','POST'])
 def addRecord():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
@@ -94,7 +220,7 @@ def addRecord():
 
         return render_template('record.html')
 
-@app.route('/admin_panel/video')
+@app.route('/admin_panel/video', methods=['GET','POST'])
 def addVideo():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
@@ -111,18 +237,18 @@ def addVideo():
 
         return render_template('video.html')
 
-@app.route('/admin_panel/match')
+@app.route('/admin_panel/match', methods=['GET','POST'])
 def addMatch():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
             _matchList = dbmanager.getMathes(connection)
             return render_template('match.html', matchList = _matchList)
 
-        if(request.form["action"] == "add_match_action"):
+        if(request.form["action"] == "Add Match"):
             dbmanager.addMatch(request.form['add_tournamentName'], request.form['add_venueName'], request.form['add_player1'],request.form['add_player2'], request.form['add_isLive'], request.form['add_score'],connection)
             return redirect(url_for('addMatch'))
 
-        if(request.form["action"] == "delete_match_action"):
+        if(request.form["action"] == "Delete"):
             dbmanager.deleteVideo(request.form['id'], connection)
             return redirect(url_for('addMatch'))
 
@@ -146,7 +272,7 @@ def sponsor():
 
         return render_template('sponsor.html')
 
-@app.route('/admin_panel/tournament')
+@app.route('/admin_panel/tournament', methods=['GET','POST'])
 def tournament():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
@@ -164,19 +290,19 @@ def tournament():
         return render_template('tournament.html')
 
 
-@app.route('/admin_panel/advertise')
+@app.route('/admin_panel/advertise', methods=['GET','POST'])
 def advertise():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
             _advertiseList = dbmanager.getAdvertises(connection)
             return render_template('advertise.html', advertiseList = _advertiseList)
 
-        if(request.form["action"] == "add_advertise_action"):
-            dbmanager.addSponsor(request.form['advertise_imageurl'], request.form['advertise_exturl'], request.form['advertise_size'], connection)
+        if(request.form["action"] == "Add Advertise"):
+            dbmanager.addAdvertise(request.form['advertise_imageurl'], request.form['advertise_exturl'], request.form['advertise_size'], connection)
             return redirect(url_for('advertise'))
 
-        if(request.form["action"] == "delete_advertise_action"):
-            dbmanager.deleteSponsor(request.form['id'], connection)
+        if(request.form["action"] == "Delete"):
+            dbmanager.deleteAdvertise(request.form['id'], connection)
             return redirect(url_for('advertise'))
 
         return render_template('advertise.html')
@@ -185,20 +311,29 @@ def advertise():
 def comment():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
-            _commentList = dbmanager.getComments("null")
+            _commentList = dbmanager.getComments("null",connection)
             return render_template('comment.html', commentList = _commentList)
 
-        if(request.form["action"] == "add_comment_action"):
+        if(request.form["action"] == "Add Comment"):
             dbmanager.addComment(request.form['comment_username'], request.form['comment_title'], request.form['comment_content'], request.form['comment_date'])
             return redirect(url_for('comment'))
 
-        if(request.form["action"] == "delete_comment_action"):
+        if(request.form["action"] == "Delete"):
             dbmanager.deleteComment(request.form['id'])
             return redirect(url_for('comment'))
 
-@app.route('/admin_panel/user')
+@app.route('/admin_panel/user', methods=['GET','POST'])
 def user():
-    return render_template('user.html')
+    with dbapi2.connect(app.config['dsn']) as connection:
+        if(request.method == 'GET'):
+            _userList = dbmanager.getUsers(connection)
+            return render_template('user.html', userList = _userList)
+
+        if(request.form["action"] == "Add User"):
+            return redirect(url_for('user'))
+
+        if(request.form["action"] == "Delete"):
+            return redirect(url_for('user'))
 
 @app.route('/admin_panel/venue', methods=['GET','POST'])
 def venue():
@@ -215,7 +350,7 @@ def venue():
             dbmanager.deleteVenue(request.form['id'], connection)
             return redirect(url_for('venue'))
 
-@app.route('/admin_panel/ticket')
+@app.route('/admin_panel/ticket', methods=['GET','POST'])
 def ticket():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
@@ -230,18 +365,18 @@ def ticket():
             dbmanager.deleteTicket(request.form['id'], connection)
             return redirect(url_for('ticket'))
 
-@app.route('/admin_panel/channel')
+@app.route('/admin_panel/channel', methods=['GET','POST'])
 def channel():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
             _channelList = dbmanager.getChannels(connection)
             return render_template('channel.html', channelList = _channelList)
 
-        if(request.form["action"] == "add_channel_action"):
+        if(request.form["action"] == "Add Channel"):
             dbmanager.addChannel(request.form['add_channel_name'], request.form['add_channel_imageurl'], request.form['add_channel_exturl'], connection)
             return redirect(url_for('channel'))
 
-        if(request.form["action"] == "delete_channel_action"):
+        if(request.form["action"] == "Delete"):
             dbmanager.deleteChannel(request.form['id'], connection)
             return redirect(url_for('channel'))
 
@@ -262,21 +397,6 @@ def award():
             dbmanager.deleteAward(request.form['id'], connection)
             return redirect(url_for('award'))
 
-@app.route('/admin_panel/social_accounts', methods=['GET','POST'])
-def social_accounts():
-    with dbapi2.connect(app.config['dsn']) as connection:
-        if(request.method == 'GET'):
-            _socialAccountsList = dbmanager.getSocialAccounts(connection)
-            return render_template('social_accounts.html', socialAccountsList = _socialAccountsList)
-
-        if(request.form["action"] == "add_social_accounts_action"):
-            dbmanager.addSocialAccountsList(request.form['add_twitter_account'], request.form['add_instagram_account'], request.form['add_facebook_account'], request.form['add_desc'], connection)
-            return redirect(url_for('social_accounts'))
-
-        if(request.form["action"] == "delete_social_accounts_action"):
-            dbmanager.deleteSocialAccountsList(request.form['id'], connection)
-            return redirect(url_for('social_accounts'))
-
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
@@ -288,6 +408,6 @@ if __name__ == '__main__':
     if VCAP_SERVICES is not None:
         app.config['dsn'] = get_elephantsql_dsn(VCAP_SERVICES)
     else:
-        app.config['dsn'] = """host='localhost' port='5432' dbname='postgres' user='postgres' password='Abcd1234'"""
+        app.config['dsn'] = "postgres://zzkyedon:gYzngQunejOWG5gmgjUbSJ-Xwr5lnPg-@jumbo.db.elephantsql.com:5432/zzkyedon"
 
     app.run(host='0.0.0.0', port=port, debug=debug)
