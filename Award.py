@@ -1,4 +1,4 @@
-
+#kerim yildirim
 
 class Award:
 
@@ -14,4 +14,4 @@ class Award:
         return self.Description
 
     def getLastWinnerID(self):
-        return self.PlayerID
+        return self.LastWinnerID

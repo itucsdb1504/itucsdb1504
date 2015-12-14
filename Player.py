@@ -13,6 +13,9 @@ class Player:
         self.Nickname = nickname
         self.MoneyListEarnings = money_list_earnings
         self.Birthday = birthday
+        self.Facebook = '#'
+        self.Twitter = '#'
+        self.Instagram = '#'
 
     def getID(self):
         return self.ID
