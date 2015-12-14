@@ -1,0 +1,46 @@
+{% extends "home_layout.html" %}
+{% block main_content %}
+<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+	{% for tournament in tournamentList: %}
+	    <div class="player-list">
+	    	<div class="col-lg-4 title" style="background-color: #34495e">
+	    		<h2 class="col-lg-12" style="color: #fff">
+                	{{tournament.getRound()}} Round
+	            </h2>
+	            <h3 class="col-lg-12" style="color: #fff">
+	                {{tournament.getPlayerCount()}} Player
+	            </h3>
+	    	</div>
+	    	<div class="col-lg-5">
+	    		<h5 class="col-lg-12" style="color: #2b2b2b">
+                	Name
+	            </h5>
+	            <h6 class="col-lg-12" style="color: #666">
+	                {{tournament.getName()}}
+	            </h6>
+	            <h5 class="col-lg-12" style="color: #2b2b2b">
+                	Venue
+	            </h5>
+	            <h6 class="col-lg-12" style="color: #666">
+	                {{tournament.getVenueName()}}
+	            </h6>
+	    	</div>
+	    	<div class="col-lg-3">
+	    		<h5 class="col-lg-12" style="color: #2b2b2b">
+                	Last Winner
+	            </h5>
+	            <h6 class="col-lg-12" style="color: #666">
+	                {{tournament.getLastWinnerName()}}
+	            </h6>
+	            <h5 class="col-lg-12" style="color: #2b2b2b">
+                	Award
+	            </h5>
+	            <h6 class="col-lg-12" style="color: #666">
+	                {{tournament.getAwardName()}}
+	            </h6>
+	    	</div>
+	    </div>
+	    <hr>
+    {% endfor %}
+</div>
+{% endblock %}
