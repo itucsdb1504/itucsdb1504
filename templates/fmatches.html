@@ -1,0 +1,47 @@
+{% extends "home_layout.html" %}
+{% block main_content %}
+<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+	{% for match in matchList: %}
+	    <div class="player-list">
+	    	<div class="col-lg-2 title" style="background-color: #34495e">
+	    		<h3 class="col-lg-12" style="color: #fff">
+                	{{match.getPlayer1()}}
+	            </h3>
+	    	</div>
+	    	<div class="col-lg-3 title" >
+	    		<h4 class="col-lg-12" style="color: #2b2b2b;margin-top:20px">
+                	Tournament
+	            </h4>
+	    		<h4 class="col-lg-12" style="color: #666">
+                	{{match.getTournamentName()}}
+	            </h4>
+	    	</div>
+	    	<div class="col-lg-2 title" style="text-align:center">
+	    		<h5 class="col-lg-12" style="color: #2b2b2b">
+                	Score
+	            </h5>
+	    		<h5 class="col-lg-12" style="color: #666">
+                	{{match.getScore()}}
+	            </h5>
+	            <h5 class="col-lg-12" style="color: #666">
+                	End Match
+	            </h5>
+	    	</div>
+	    	<div class="col-lg-3 title" style="text-align:right">
+	    		<h4 class="col-lg-12" style="color: #2b2b2b;margin-top:20px">
+                	Venue
+	            </h4>
+	    		<h4 class="col-lg-12" style="color: #666">
+                	{{match.getVenueName()}}
+	            </h4>
+	    	</div>
+	    	<div class="col-lg-2 title" style="background-color: #34495e">
+	    		<h3 class="col-lg-12" style="color: #fff">
+                	{{match.getPlayer2()}}
+	            </h3>
+	    	</div>
+    	</div>
+	    <hr>
+    {% endfor %}
+</div>
+{% endblock %}
