@@ -1,36 +1,26 @@
 #isin kirbas 040090600
 
-class User:
+class Comment:
 
-    def __init__(self, id, firstname, lastname, age, gender, email, account_type):
+    def __init__(self, id, username, title, content, date):
         self.ID = id
-        self.FirstName = firstname
-        self.LastName = lastname
-        self.Age = age
-        self.Gender = gender
-        self.Email = email
-        self.AccountType = account_type
-        self.Username = " "
+        self.Username = username
+        self.Title = title
+        self.Content = content
+        self.Date = date
+
 
     def getID(self):
         return self.ID
 
-    def getFirstName(self):
-        return self.FirstName
+    def getUsername(self):
+        return self.Username
 
-    def getLastName(self):
-        return self.LastName
+    def getTitle(self):
+        return self.Title
 
-    def getAge(self):
-        return self.Age
+    def getContent(self):
+        return self.Content
 
-    def getGender(self):
-        return self.Gender
-
-    def getEmail(self):
-        return self.Email
-
-    def getAccountType(self):
-        return self.AccountType
-
-
+    def getDate(self):
+        return self.Date
