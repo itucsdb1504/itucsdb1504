@@ -1,0 +1,20 @@
+{% extends "home_layout.html" %}
+{% block main_content %}
+<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+	{% for news in newsList: %}
+	    <div class="post-preview">
+	        <a href="{{ url_for('newsDetail',newsid = news.getID()) }}">
+	            <img class="post-image col-lg-4" src="{{news.getImageUrl()}}"/>
+	            <h2 class="post-title col-lg-8">
+	                {{news.getTitle()}}
+	            </h2>
+	            <h3 class="post-subtitle col-lg-8">
+	                {{news.getContent()}}
+	            </h3>
+	        </a>
+	        <p class="post-meta">{{news.getDate()}}</p>
+	    </div>
+	    <hr>
+    {% endfor %}
+</div>
+{% endblock %}
