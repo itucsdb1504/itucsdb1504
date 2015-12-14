@@ -1,0 +1,20 @@
+{% extends "home_layout.html" %}
+{% block main_content %}
+<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+	{% for record in recordList: %}
+	    <div class="post-preview">
+	        <a href="https://www.youtube.com/watch?v={{record.getVideoUrl()}}" target="_blank">
+	            <img class="post-image col-lg-4" src="http://img.youtube.com/vi/{{record.getVideoUrl()}}/hqdefault.jpg"/>
+	            <h2 class="post-title col-lg-8">
+	                {{record.getPlayerName()}}
+	            </h2>
+	            <h3 class="post-subtitle col-lg-8">
+	                {{record.getDescription()}}
+	            </h3>
+	        </a>
+	        <p class="post-meta">{{record.getYear()}}</p>
+	    </div>
+	    <hr>
+    {% endfor %}
+</div>
+{% endblock %}
