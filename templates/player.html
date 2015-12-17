@@ -13,12 +13,14 @@
 			</thead>
 			<tbody>
 				{% for player in playerList: %}
+					<form action="{{ url_for('addPlayer') }}" method="post">
 					<tr>
-						<td class="id" style="display: none;">{{player.getID()}}</td>
+						<td><input type="text" value="{{players.getID()}}" name="id" style="display:none"/></td>
 						<td>{{player.getFirstName()}}</td>
 						<td>{{player.getLastName()}}</td>
 						<td>{{player.getNationality()}}</td>
 						<td>{{player.getEmail()}}</td>
+						<td><input type='submit' name="action" value="delete_player_action"></td>
 					</tr>
 				{% endfor %}
 			</tbody>
