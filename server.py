@@ -124,7 +124,7 @@ def login():
                 _info = layoutInfo('All about Snooker','But Username is used by Another User!!','static/img/home-bg.jpg')
 
             return render_template('login.html', info = _info,advertiseList=_advertiseList)
-
+        
         if(request.form["action"] == "Log In"):
             user = dbmanager.checkUserLogin(request.form['username'], request.form['password'], connection)
             if user is not None:

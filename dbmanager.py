@@ -808,7 +808,7 @@ def getSocialAccounts(conn):
 
        social_account = Social_accounts(row[0],row[1],row[2],row[3])
 
-       socialAccountsListList.append(social_account)
+       socialAccountsList.append(social_account)
 
        row = cursor.fetchone()
 
