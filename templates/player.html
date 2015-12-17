@@ -15,7 +15,7 @@
 				{% for player in playerList: %}
 					<form action="{{ url_for('addPlayer') }}" method="post">
 					<tr>
-						<td><input type="text" value="{{players.getID()}}" name="id" style="display:none"/></td>
+						<td><input type="text" value="{{player.getID()}}" name="id" style="display:none"/></td>
 						<td>{{player.getFirstName()}}</td>
 						<td>{{player.getLastName()}}</td>
 						<td>{{player.getNationality()}}</td>
