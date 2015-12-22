@@ -12,9 +12,9 @@
 			</thead>
 			<tbody>
 				{% for socialAccounts in socialAccountsList: %}
-					<form action="{{ url_for('socialAccounts') }}" method="post">
+					<form action="{{ url_for('social_accounts') }}" method="post">
 						<tr>
-							<td><input type="hidden" value="{{ social_accounts.getID() }}" name="id" /></td>
+							<td><input type="hidden" value="{{ socialAccounts.getID() }}" name="id" /></td>
 							<td>{{socialAccounts.getTwitterLink()}}</td>
 							<td>{{socialAccounts.getInstagramLink()}}</td>
 							<td>{{socialAccounts.getFacebookLink()}}</td>
@@ -27,20 +27,20 @@
 	</div>
 
 	<div class="form-area col-md-8 col-centered">
-		<form action="{{ url_for('socialAccounts') }}" method="post">
+		<form action="{{ url_for('social_accounts') }}" method="post">
 			<br style="clear: both">
 			<h3 style="margin-bottom: 25px; text-align: center;">Add Social Accounts</h3>
 			<div class="form-group">
-				<input type="text" class="form-control" name="add_twitter_link"
-					placeholder="Twitter Link" required>
+				<input type="text" class="form-control" name="add_twitter_account"
+					placeholder="Twitter account" required>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" name="add_instagram_link"
-					placeholder="Instagram Link" required>
+				<input type="text" class="form-control" name="add_instagram_account"
+					placeholder="Instagram account" required>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" name="add_facebook_link"
-					placeholder="Facebook Link" required>
+				<input type="text" class="form-control" name="add_facebook_account"
+					placeholder="Facebook account" required>
 			</div>
 
 			<input type="submit" name="action" value="add_social_accounts_action"

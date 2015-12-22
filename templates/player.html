@@ -7,8 +7,16 @@
 				<tr>
 					<th>FirstName</th>
 					<th>LastName</th>
+					<th>Age</th>
+					<th>Gender</th>
 					<th>Nationality</th>
 					<th>Email</th>
+					<th>Turned_pro</th>
+					<th>Location</th>
+					<th>Nickname</th>
+					<th>Money_list_earnings</th>
+					<th>Birthday</th>
+
 				</tr>
 			</thead>
 			<tbody>
@@ -21,7 +29,7 @@
 						<td>{{player.getNationality()}}</td>
 						<td>{{player.getEmail()}}</td>
 						<td><input type='submit' name="action" value="delete_player_action"></td>
-					</tr>
+					</tr></form>
 				{% endfor %}
 			</tbody>
 		</table>
@@ -40,14 +48,41 @@
 							placeholder="LastName" required>
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="add_nationality"
-							placeholder="Nationality" required>
+						<input type="text" class="form-control" name="add_age"
+							placeholder="Age" required>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" name="add_gender"
+							placeholder="Gender" required>
 					</div>
 					<div class="form-group">
 						<input type="text" class="form-control" name="add_email"
 							placeholder="Email" required>
 					</div>
-
+					<div class="form-group">
+						<input type="text" class="form-control" name="add_nationality"
+							placeholder="Nationality" required>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" name="add_turned_pro"
+							placeholder="Turned_pro" required>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" name="add_location"
+							placeholder="Location" required>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" name="add_nickname"
+							placeholder="Nickname" required>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" name="add_money_list_earnings"
+							placeholder="Money_list_earnings" required>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" name="add_birthday"
+							placeholder="Birthday" required>
+					</div>
 					<input type="submit" name="action" value="add_player_action"
 				class="btn btn-primary pull-right" />
 				</form>

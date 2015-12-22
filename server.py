@@ -16,6 +16,7 @@ from flask import request
 from flask import session
 
 app = Flask(__name__)
+app.debug = True
 app.config['SESSION_TYPE'] = 'memcached'
 app.config['SECRET_KEY'] = 'itucsdb1504'
 
@@ -179,7 +180,7 @@ def player():
             return render_template('player.html', playerList = _playerList)
 
         if(request.form["action"] == "add_player_action"):
-            dbmanager.addPlayer(request.form['add_firstname'], request.form['add_lastname'], request.form['add_age'], request.form['add_gender'],request.form['add_email'],request.form['add_nationality'],request.form['add_turned_pro'],request.form['add_location'],request.form['add_nickname'],request.form['add_money_list_earnings'],request.form['add_birthday'], connection)
+            dbmanager.addPlayer(request.form['add_firstname'], request.form['add_lastname'], int(request.form['add_age']), request.form['add_gender'],request.form['add_email'],request.form['add_nationality'],request.form['add_turned_pro'],request.form['add_location'],request.form['add_nickname'],request.form['add_money_list_earnings'],request.form['add_birthday'], connection)
             return redirect(url_for('player'))
 
         if(request.form["action"] == "delete_player_action"):
@@ -397,6 +398,8 @@ def award():
             dbmanager.deleteAward(request.form['id'], connection)
             return redirect(url_for('award'))
 
+        return render_template('award.html')
+
 @app.route('/admin_panel/social_accounts', methods=['GET','POST'])
 def social_accounts():
     with dbapi2.connect(app.config['dsn']) as connection:
@@ -405,12 +408,14 @@ def social_accounts():
             return render_template('social_accounts.html', socialAccountsList = _socialAccountsList)
 
         if(request.form["action"] == "add_social_accounts_action"):
-            dbmanager.addSocialAccountsList(request.form['add_twitter_account'], request.form['add_instagram_account'], request.form['add_facebook_account'], request.form['add_desc'], connection)
+            dbmanager.addSocialAccounts(request.form['add_twitter_account'], request.form['add_instagram_account'], request.form['add_facebook_account'], connection)
             return redirect(url_for('social_accounts'))
 
         if(request.form["action"] == "delete_social_accounts_action"):
-            dbmanager.deleteSocialAccountsList(request.form['id'], connection)
+            dbmanager.deleteSocialAccounts(request.form['id'], connection)
             return redirect(url_for('social_accounts'))
+
+        return render_template('social_accounts.html')
 
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')

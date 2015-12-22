@@ -682,7 +682,7 @@ def addAward(description, last_winner_id, conn):
         cursor.execute("INSERT INTO awards VALUES('%s','%s','%s')"%(utils.generateID(),description,last_winner_id))
 
         conn.commit()
-
+        return 'OK'
 
     except Exception as e:
         print(str(e))
@@ -727,9 +727,9 @@ def getPlayers(conn):
     for temp_player in playerList:
         cursor.execute("SELECT * FROM social_accounts WHERE id = '%s'"%(temp_player.getID()))
         row2 = cursor.fetchone()
-        temp_player.Twitter = row2[1]
-        temp_player.Instagram = row2[2]
-        temp_player.Facebook = row2[3]
+        #temp_player.Twitter = row2[1]
+        #temp_player.Instagram = row2[2]
+        #temp_player.Facebook = row2[3]
 
     return playerList
 
@@ -741,7 +741,7 @@ def getPlayer(id,conn):
 
     row = cursor.fetchone()
 
-    _player = Player(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11])
+    _player = Player(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10])
 
     return _player
 
@@ -751,13 +751,13 @@ def addPlayer(firstname, lastname, age, gender, email, nationality, turned_pro, 
 
         cursor = conn.cursor()
 
-        cursor.execute("INSERT INTO players VALUES('%s','%s','%d','%s',%s','%s',%s','%s',%s','%s',%s')"%(utils.generateID(), firstname, lastname, age, gender, email, nationality, turned_pro, location, nickname, money_list_earnings, birthday))
+        cursor.execute("INSERT INTO players VALUES('%s','%s','%s','%d','%s','%s','%s','%s','%s','%s','%s','%s')"%(utils.generateID(), firstname, lastname, age, gender, email, nationality, turned_pro, location, nickname, money_list_earnings, birthday))
 
         conn.commit()
 
 
     except Exception as e:
-        print(str(e))
+        print(e)
         pass
 
 def deletePlayer(id, conn):
