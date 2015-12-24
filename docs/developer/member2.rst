@@ -113,7 +113,7 @@ Class file of Comment:
 ***********************
 .. code-block:: python
 
-class Comment:
+    class Comment:
 
     def __init__(self, id, username, title, content, date):
         self.ID = id
@@ -144,7 +144,7 @@ Class file of Advertise:
 
 .. code-block:: python
 
-class Advertise:
+    class Advertise:
 
     def __init__(self, id, image_url, ext_url, size):
         self.ID = id
