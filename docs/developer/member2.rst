@@ -76,7 +76,7 @@ Class file of User:
 **********************
 .. code-block:: python
 
-class User:
+   class User:
 
    def __init__(self, id, firstname, lastname, age, gender, email,account_type):
         self.ID = id
