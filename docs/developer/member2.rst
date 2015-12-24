@@ -169,8 +169,8 @@ User related part of server.py file:
 
 .. code-block:: python
 
-@app.route('/admin_panel/user', methods=['GET','POST'])
-def user():
+    @app.route('/admin_panel/user', methods=['GET','POST'])
+    def user():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
             _userList = dbmanager.getUsers(connection)
@@ -186,8 +186,8 @@ Comment related part of server.py file:
 ****************************************
 .. code-block:: python
 
-@app.route('/admin_panel/comment', methods=['GET','POST'])
-def comment():
+    @app.route('/admin_panel/comment', methods=['GET','POST'])
+    def comment():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
             _commentList = dbmanager.getComments("null",connection)
@@ -227,7 +227,7 @@ User related part of dbmanager.py file:
 ******************************************
 .. code-block:: python
 
-def createUserTable():
+    def createUserTable():
 
     conn = psycopg2.connect(conn_string)
 
@@ -237,7 +237,7 @@ def createUserTable():
 
     conn.commit()
 
-def getUsers(conn):
+    def getUsers(conn):
 
     cursor = conn.cursor()
 
@@ -256,7 +256,7 @@ def getUsers(conn):
 
     return userList
 
-def checkUserLogin(username, password,conn):
+    def checkUserLogin(username, password,conn):
 
     cursor = conn.cursor()
 
@@ -277,7 +277,7 @@ def checkUserLogin(username, password,conn):
 
     return _user
 
-def addUser(firstname, lastname, age, gender, email,username,password,conn):
+    def addUser(firstname, lastname, age, gender, email,username,password,conn):
 
     try:
 
@@ -297,8 +297,8 @@ def addUser(firstname, lastname, age, gender, email,username,password,conn):
         print(str(e))
         return 'SameUsername'
 
-def deleteUser(id,conn):
-
+    def deleteUser(id,conn):
+ 
     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM users WHERE id = '%s'"%(id))
@@ -309,7 +309,7 @@ Comment related part of dbmanager.py file:
 *******************************************
 .. code-block:: python
 
-def createCommentTable():
+    def createCommentTable():
 
     conn = psycopg2.connect(conn_string)
 
@@ -319,7 +319,7 @@ def createCommentTable():
 
     conn.commit()
 
-def getComments(news_id, conn):
+    def getComments(news_id, conn):
 
     cursor = conn.cursor()
 
@@ -343,7 +343,7 @@ def getComments(news_id, conn):
 
     return commentList
 
-def addComment(username, newsid ,title, content, date, conn):
+    def addComment(username, newsid ,title, content, date, conn):
 
     try:
 
@@ -357,7 +357,7 @@ def addComment(username, newsid ,title, content, date, conn):
         print(str(e))
         pass
 
-def deleteComment(id, conn):
+    def deleteComment(id, conn):
 
     cursor = conn.cursor()
 
@@ -369,7 +369,7 @@ Advertise related part of dbmanager.py file:
 **********************************************
 .. code-block:: python
 
-def createAdvertiseTable():
+    def createAdvertiseTable():
 
     conn = psycopg2.connect(conn_string)
 
@@ -379,7 +379,7 @@ def createAdvertiseTable():
 
     conn.commit()
 
-def getAdvertises(conn):
+    def getAdvertises(conn):
 
     cursor = conn.cursor()
 
@@ -399,7 +399,7 @@ def getAdvertises(conn):
 
     return advertiseList
 
-def addAdvertise(image_url, ext_url, size, conn):
+    def addAdvertise(image_url, ext_url, size, conn):
 
     try:
 
@@ -415,7 +415,7 @@ def addAdvertise(image_url, ext_url, size, conn):
         print(str(e))
         pass
 
-def deleteAdvertise(id, conn):
+    def deleteAdvertise(id, conn):
 
     cursor = conn.cursor()
 
