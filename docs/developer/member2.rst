@@ -205,8 +205,8 @@ Advertise related part of server.py file:
 *******************************************
 .. code-block:: python
 
-@app.route('/admin_panel/advertise', methods=['GET','POST'])
-def advertise():
+    @app.route('/admin_panel/advertise', methods=['GET','POST'])
+    def advertise():
     with dbapi2.connect(app.config['dsn']) as connection:
         if(request.method == 'GET'):
             _advertiseList = dbmanager.getAdvertises(connection)
