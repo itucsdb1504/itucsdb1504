@@ -10,9 +10,9 @@ This page is to list and manage information about venues.
 ------
 The page used to create and delete venues.
 
-.. figure:: static/news.png
+.. figure:: static/Venue.PNG
       :scale: 80 %
-      :alt: Admin Panel Screen Shot of /news Page
+      :alt: Admin Panel Screen Shot of /venue Page
 
       Fig. 1: Screenshot of /news.
 
