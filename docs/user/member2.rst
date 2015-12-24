@@ -9,7 +9,7 @@ User page is used to list and manage the information of users.
 --------
 The page for adding and deleting user information.
 
-.. figure:: static/User.png
+.. figure:: static/User.PNG
       :scale: 80 %
       :alt: Screenshot of User Admin Panel Page
       
@@ -61,7 +61,7 @@ This page is used to list and manage the information of comments.
 -----------
 The page for adding and deleting comment information.
 
-.. figure:: static/comment.png
+.. figure:: static/comment.PNG
       :scale: 80 %
       :alt: Screenshot of Comment Admin Panel Page
       
