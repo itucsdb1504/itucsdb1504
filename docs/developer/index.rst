@@ -4,23 +4,13 @@ Developer Guide
 Database Design
 ---------------
 
-**explain the database design of your project**
+.. figure:: static/erdiagram.png
+      :scale: 80 %
+      :alt: Entity Relationship Diagram
 
-**include the E/R diagram(s)**
+      Fig. 1.2: Entity Relationship Diagram
 
-Code
-----
 
-**explain the technical structure of your code**
-
-**to include a code listing, use the following example**::
-
-   .. code-block:: python
-
-      class Foo:
-
-         def __init__(self, x):
-            self.x = x
 
 .. toctree::
 

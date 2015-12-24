@@ -10,7 +10,7 @@ This page are used for listing and managing the information related to the match
 The page for adding and managing match informations.
 
 .. figure:: static/matches.png
-      :scale: 30 %
+      :scale: 80 %
       :alt: Screenshot of Matches Admin Panel Page
 
       Fig. 1.1: Screenshot from /matches page.
@@ -38,7 +38,7 @@ This page are used for listing and managing the information related to the spons
 The page for adding and managing match informations.
 
 .. figure:: static/sponsors.png
-      :scale: 30 %
+      :scale: 80 %
       :alt: Screenshot of Sponsors Admin Panel Page
 
       Fig. 1.2: Screenshot from /sponsor page.
@@ -64,7 +64,7 @@ This page is used for listing and managing the information related to the tourna
 The page for adding and managing tournament informations.
 
 .. figure:: static/tournaments.png
-      :scale: 30 %
+      :scale: 80 %
       :alt: Screenshot of Tournaments Admin Panel Page
 
       Fig. 1.3: Screenshot from /tournament page.
