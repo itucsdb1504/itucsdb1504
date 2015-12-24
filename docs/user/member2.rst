@@ -9,7 +9,7 @@ User page is used to list and manage the information of users.
 --------
 The page for adding and deleting user information.
 
-.. figure:: static/users.png
+.. figure:: static/User.png
       :scale: 80 %
       :alt: Screenshot of User Admin Panel Page
       
