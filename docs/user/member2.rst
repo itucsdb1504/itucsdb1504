@@ -9,10 +9,11 @@ User page is used to list and manage the information of users.
 --------
 The page for adding and deleting user information.
 
-.. figure:: static/Users.png
+.. figure:: static/User.PNG
       :scale: 80 %
       :alt: Screenshot of User Admin Panel Page
-      Fig. 2.1: Screenshot from /user page.
+      
+      Fig. 1: Screenshot from /user page.
 
 The current data about users are listed on top of the page.
 The information contains First Name, Last Name, Age, Gender, Email and Account Type for users.
@@ -36,7 +37,8 @@ The page for adding and deleting advertise information.
 .. figure:: static/Advertise.png
       :scale: 80 %
       :alt: Screenshot of Advertise Admin Panel Page
-      Fig. 2.2: Screenshot from /advertise page.
+      
+      Fig. 2: Screenshot from /advertise page.
 
 The current data about advertise are listed on top of the page.
 The information contains Image URL, External URL and size of advertise.
@@ -59,10 +61,11 @@ This page is used to list and manage the information of comments.
 -----------
 The page for adding and deleting comment information.
 
-.. figure:: static/comment.png
+.. figure:: static/Comment.PNG
       :scale: 80 %
       :alt: Screenshot of Comment Admin Panel Page
-      Fig. 2.3: Screenshot from /comment page.
+      
+      Fig. 3: Screenshot from /comment page.
 
 The current data about comments are listed on top of the page.
 The information contains Username, Title, Content and Date for this comment.
