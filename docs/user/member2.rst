@@ -61,7 +61,7 @@ This page is used to list and manage the information of comments.
 -----------
 The page for adding and deleting comment information.
 
-.. figure:: static/comment.PNG
+.. figure:: static/Comment.PNG
       :scale: 80 %
       :alt: Screenshot of Comment Admin Panel Page
       
