@@ -3,7 +3,7 @@ Parts Implemented by İLKER YAĞMUR
 
 Database Tables
 ---------------
-.. figure:: static/member3db.png
+.. figure:: static/member3db.PNG
       :scale: 100 %
       :alt: Database Tables
 
