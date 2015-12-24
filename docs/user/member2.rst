@@ -12,6 +12,7 @@ The page for adding and deleting user information.
 .. figure:: static/Users.png
       :scale: 80 %
       :alt: Screenshot of User Admin Panel Page
+      
       Fig. 2.1: Screenshot from /user page.
 
 The current data about users are listed on top of the page.
