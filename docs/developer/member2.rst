@@ -3,7 +3,7 @@ Parts Implemented by IŞIN KIRBAŞ
 
 Database Tables
 ---------------
-.. figure:: static/member2db.png
+.. figure:: static/member2db.PNG
       :scale: 100 %
       :alt: Database Tables
 
