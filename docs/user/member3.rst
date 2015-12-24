@@ -14,7 +14,7 @@ The page used to create and delete venues.
       :scale: 80 %
       :alt: Admin Panel Screen Shot of /venue Page
 
-      Fig. 1: Screenshot of /news.
+      Fig. 1: Screenshot of /venue.
 
 Information taken from the database is listed on the upper part of the page.
 The table has four columns: Name, Capacity, Location and Description.
@@ -37,7 +37,7 @@ This page is to list and manage ticket data.
 -------
 The page used to create and delete ticket data.
 
-.. figure:: static/ticket.png
+.. figure:: static/Ticket.PNG
       :scale: 80 %
       :alt: Admin Panel Screen Shot of /ticket Page
 
@@ -67,7 +67,7 @@ This page is to list and manage channel data.
 --------
 The page used to create and delete channel data.
 
-.. figure:: static/channel.png
+.. figure:: static/Channel.PNG
       :scale: 80 %
       :alt: Admin Panel Screen Shot of /channel Page
 
